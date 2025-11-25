@@ -1,4 +1,4 @@
-# Cryosphere Community Datapool
+# Cryosphere Community Datapool (CCD)
 
 Ice sheet modelling data product resource to support ACCESS / Australian ice sheet modelling community efforts.
 
