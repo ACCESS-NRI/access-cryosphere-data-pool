@@ -1,51 +1,71 @@
 datasets:
-  bedmachine_antarctica:
+  measures_bedmachine_antarctica:
     display_name: BedMachine Antarctica
-    path: /Users/lawrence.bird/Documents/data/bedmachine
+    path: /Users/lawrence.bird/Documents/data/datapool/measures_bedmachine_antarctica
+    description: High-resolution bed topography and ice thickness data for Antarctica.
+    tags:
+      - antarctica
+      - bed topography
+      - ice thickness
+      - surface elevation
+      - bed uncertainty
+      - ice mask
     extension: nc
-    description: BedMachine Antarctica dataset
-    tags: ["Antarctica", "bed", "ice_thickness", "surface_elevation", "measures"]
-
-  rignot_basal_melt_rates:
-    display_name: Rignot Basal Melt Rates
-    path: /Users/lawrence.bird/Documents/data/rignot_melting_rate
-    extension: nc
-    description: Ice shelf melting rate dataset
-    tags: ["Antarctica", "basal_melt_rates"]
-
-  measures_composite_velocity:
-    display_name: Measures Composite Velocity
-    path: /Users/lawrence.bird/Documents/data/measures_composite_velocity
-    extension: nc
-    description: Measures Composite Velocity dataset
-    tags: ["Antarctica", "velocity", "measures"]
   
-  aq1_heat_flux:
-    display_name: AQ1 Heat Flux
-    path: /Users/lawrence.bird/Documents/data/aq1_heat_flux
-    extension: nc
-    description: AQ1 Heat Flux dataset
-    tags: ["Antarctica", "heat_flux"]
-
-  ismip6_basal_melt_rates:
-    display_name: ISMIP6 Basal Melt Rates
-    path: /Users/lawrence.bird/Documents/data/ismip6_basal_melt_rates
-    extension: nc
-    description: ISMIP6 Basal Melt Rates dataset
-    tags: ["Antarctica", "basal_melt_rates", "ismip6"]
-
-  racmo_2_3p2:
-    display_name: RACMO 2.3p2
-    path: /Users/lawrence.bird/Documents/data/racmo_2.3p2
-    extension: nc
-    description: RACMO 2.3p2 dataset
-    tags: ["Antarctica", "racmo"]
-    loader: prepro_racmo_time
-  
-  measures_annual_velocity:
-    display_name: Measures Annual velocity
-    path: /Users/lawrence.bird/Documents/data/measures_annual_velocity
-    extension: nc
-    description: Measures Annual Velocity dataset
-    tags: ["Antarctica", "velocity", "measures", "annual"]
-    loader: prepro_annual_time
+  bedmap:
+    display_name: Bedmap
+    path: /Users/lawrence.bird/Documents/data/datapool/bedmap
+    description: Gridded, geospatial, and point datasets of Antarctic ice thickness, surface elevation, and bed elevation.
+    tags:
+      - antarctica
+      - bed topography
+      - ice thickness
+      - surface elevation
+    subdatasets:
+      v1:
+        geospatial:
+          subpath: geospatial_data
+          extension: gpkg
+          no_data_value: -9999
+        points:
+          subpath: point_data
+          extension: csv
+          skip_lines: 18
+          no_data_value: -9999
+        gridded:
+          subpath: gridded_data
+          extension: tif
+      v2:
+        geospatial:
+          subpath: geospatial_data
+          extension: gpkg
+          no_data_value: -9999
+          ignore_dirs:
+            - shapeLines
+        points:
+          subpath: point_data
+          extension: csv
+          skip_lines: 18
+          no_data_value: -9999
+        gridded:
+          subpath: gridded_data
+          extension: tif
+          ignore_dirs:
+            - resources
+      v3:
+        geospatial:
+          subpath: geospatial_data
+          extension: gpkg
+          no_data_value: -9999
+          ignore_dirs:
+            - shapeLines
+        points:
+          subpath: point_data
+          extension: csv
+          skip_lines: 18
+          no_data_value: -9999
+        gridded:
+          subpath: gridded_data
+          extension: nc
+          ignore_dirs:
+            - bm3_streamlines_pt
