@@ -118,7 +118,7 @@ class DataCatalog:
                         extension = subds_meta.get("extension")
                         skip_lines = subds_meta.get("skip_lines", 0)
                         no_data_value = subds_meta.get("no_data_value", None)
-                        ignore_dirs = meta.get("ignore_dirs", None)
+                        ignore_dirs = subds_meta.get("ignore_dirs", None)
 
                         # Error checks
                         if not subpath:
@@ -225,7 +225,7 @@ class DataCatalog:
 
         return sorted(filtered)
 
-    def _load_dataset_row(self, row, ignore_dirs = None):
+    def _load_dataset_row(self, row, ignore_dirs = None, **kwargs):
         """
         Load all files for a dataset row, with optional directory filtering.
         """
@@ -289,11 +289,14 @@ class DataCatalog:
         # TIF -> rioxarray / xarray
         if ext in ("tif"):
 
-            # Load each TIF into an xarray DataArray and store in a dict
+            # Get kwargs (or set defaults)
+            masked = kwargs.pop("masked", True)
+            
+            # Load each TIF into an xarray DataArray and store in a dict. Using masked = True automates handling of NaN values.
             data_dict = {}
             for f in files:
                 name = f.stem
-                data = rxr.open_rasterio(f)
+                data = rxr.open_rasterio(f, masked = masked)
 
                 # Squeeze out single-size 'band' dimension if present
                 if "band" in data.dims and data.band.size == 1:
@@ -316,7 +319,7 @@ class DataCatalog:
 
         raise ValueError(f"Extension '{ext}' is currently not supported for loading. Use one of: csv, gpkg, shp, tif, nc.")
 
-    def load_dataset(self, dataset, version, subdataset = None, ignore_dirs = None):
+    def load_dataset(self, dataset, version, subdataset = None, ignore_dirs = None, **kwargs):
         """
         Load any dataset by name/version/subdataset with optional directory filtering.
 
@@ -368,13 +371,18 @@ class DataCatalog:
             if subset.empty:
                 raise KeyError(f"No dataset entry found for: {dataset}, {version} ({subdataset})")
 
-        # Raise error if multiple entries found (should be unique)
-        if len(subset) > 1:
+        # Raise error if multiple entries found (should be unique).
+        # geopackages are a single file, so only one match should exist
+        # shapefiles consist of multiple files, so up to 4 matches can exist (.shp, .shx, .dbf, .prj)
+        if len(subset) > 1 and all(df.extension == 'gpkg'):
+            raise ValueError("Multiple entries matched; dataset table should have unique rows.")
+        
+        if len(subset) > 4 and all(df.extension == 'shp'):
             raise ValueError("Multiple entries matched; dataset table should have unique rows.")
 
         # Load dataset from the single matching row
         row = subset.iloc[0]
-        data = self._load_dataset_row(row, ignore_dirs = ignore_dirs)
+        data = self._load_dataset_row(row, ignore_dirs = ignore_dirs, **kwargs)
         
         return data
 

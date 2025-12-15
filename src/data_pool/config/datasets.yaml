@@ -1,7 +1,9 @@
 datasets:
+  
+  # ELEVATION AND GEOMETRY DATASETS
   measures_bedmachine_antarctica:
     display_name: BedMachine Antarctica
-    path: /Users/lawrence.bird/Documents/data/datapool/measures_bedmachine_antarctica
+    path: /g/data/av17/access-nri/cryosphere-data-pool/elevation_geometry/measures_bedmachine_antarctica
     description: High-resolution bed topography and ice thickness data for Antarctica.
     tags:
       - antarctica
@@ -14,7 +16,7 @@ datasets:
   
   bedmap:
     display_name: Bedmap
-    path: /Users/lawrence.bird/Documents/data/datapool/bedmap
+    path: /g/data/av17/access-nri/cryosphere-data-pool/elevation_geometry/bedmap
     description: Gridded, geospatial, and point datasets of Antarctic ice thickness, surface elevation, and bed elevation.
     tags:
       - antarctica
@@ -69,3 +71,89 @@ datasets:
           extension: nc
           ignore_dirs:
             - bm3_streamlines_pt
+
+  measures_its_live_antarctica_annual_ice_mask:
+    display_name: ITS_LIVE Annual 240 m Ice Sheet Extent Mask - 1997 to 2021
+    path: /g/data/av17/access-nri/cryosphere-data-pool/elevation_geometry/measures_its_live_antarctic_annual_240m_ice_sheet_extent_masks_1997_2021
+    description: Annual ice sheet extent masks for Antarctica from ITS_LIVE at 240 m resolution, covering the years 1997 to 2021. Ice thickness and velocity data used to determine the presence of ice are also provided.
+    tags:
+      - antarctica
+      - ice mask
+      - ice thickness
+      - ice velocity
+    extension: nc
+
+  measures_its_live_antarctic_grounded_ice_sheet_elevation_change:
+    display_name: ITS_LIVE Antarctic Ice Sheet grounded ice elevation change
+    path: /g/data/av17/access-nri/cryosphere-data-pool/elevation_geometry/measures_its_live_antarctic_grounded_ice_sheet_elevation_change
+    description: ITS_LIVE Antarctic Ice Sheet grounded ice elevation change
+    tags:
+      - antarctica
+      - ice thickness
+      - thickness change
+    extension: nc
+
+  measures_its_live_antarctic_quarterly_ice_shelf_height_change:
+    display_name: ITS_LIVE Antarctic Ice Shelf quarterly height change and basal melt rates - 1992 to 2017
+    path: /g/data/av17/access-nri/cryosphere-data-pool/elevation_geometry/measures_its_live_antarctic_quarterly_1920m_ice_shelf_height_change_and_basal_melt_rates_1992_2017
+    description: ITS_LIVE Antarctic Ice Shelf quarterly height change and basal melt rates - 1992 to 2017
+    tags:
+      - antarctica
+      - ice shelf
+      - height change
+      - basal melt rates
+      - smb
+      - ice thickness
+    extension: nc
+
+  # GEOSPTATIAL DATASETS
+  measures_antarctic_boundaries:
+    display_name: Antarctic Boundaries for IPY 2007-2009 from Satellite Radar
+    path: /g/data/av17/access-nri/cryosphere-data-pool/geospatial/measures_antarctic_boundaries_for_ipy_2007_2009_from_satellite_radar
+    description: Antarctic coastline, grounding line, and ice front positions derived from satellite radar data for the International Polar Year 2007-2009.
+    tags:
+      - antarctica
+      - coastline
+      - grounding line
+      - ice front
+      - ice mask
+    extension: shp
+    subdatasets:
+      v1:
+        coastline:
+          subpath: Coastline_Antarctica
+          extension: shp
+        grounding_line:
+          subpath: GroundingLine_Antarctica
+          extension: shp
+        ice_boundaries:
+          subpath: IceBoundaries_Antarctica
+          extension: shp
+        ice_shelf:
+          subpath: IceShelf_Antarctica
+          extension: shp
+        mask:
+          subpath: Mask_Antarctica
+          extension: tif
+      v2:
+        basins:
+          subpath: Basins_Antarctica
+          extension: shp
+        basins_imbie:
+          subpath: Basins_IMBIE_Antarctica
+          extension: shp
+        coastline:
+          subpath: Coastline_Antarctica
+          extension: shp
+        grounding_line:
+          subpath: GroundingLine_Antarctica
+          extension: shp
+        ice_boundaries:
+          subpath: IceBoundaries_Antarctica
+          extension: shp
+        ice_shelf:
+          subpath: IceShelf_Antarctica
+          extension: shp
+        mask:
+          subpath: Mask_Antarctica
+          extension: tif
