@@ -6,6 +6,8 @@ import geopandas as gpd
 import numpy as np
 import rioxarray as rxr
 
+from . import loaders
+
 class DataCatalog:
     """
     A catalog for managing and loading datasets with versioning and subdataset support.
@@ -168,6 +170,7 @@ class DataCatalog:
                         skip_lines = self._resolve_metadata(meta, subds_meta, version, "skip_lines", 0)
                         no_data_value = self._resolve_metadata(meta, subds_meta, version, "no_data_value", None)
                         ignore_dirs = self._resolve_metadata(meta, subds_meta, version, "ignore_dirs", None)
+                        loader = self._resolve_metadata(meta, subds_meta, version, "loader", "default")
                         
                         # Normalise lists as needed
                         ignore_dirs = self._normalise_list(ignore_dirs)
@@ -195,6 +198,7 @@ class DataCatalog:
                             "skip_lines": skip_lines,
                             "no_data_value": no_data_value,
                             "ignore_dirs": ignore_dirs,
+                            "loader": loader,
                         })
 
             # VERSIONED DATASETS (no subdatasets)
@@ -208,6 +212,7 @@ class DataCatalog:
                     skip_lines = self._get_metadata(meta, version, "skip_lines", 0)
                     no_data_value = self._get_metadata(meta, version, "no_data_value", None)
                     ignore_dirs = self._get_metadata(meta, version, "ignore_dirs", None)
+                    loader = self._get_metadata(meta, version, "loader", "default")
 
                     # Normalise lists as needed
                     ignore_dirs = self._normalise_list(ignore_dirs)
@@ -233,6 +238,7 @@ class DataCatalog:
                         "skip_lines": skip_lines,
                         "no_data_value": no_data_value,
                         "ignore_dirs": ignore_dirs,
+                        "loader": loader,
                     })
 
         return pd.DataFrame(records)
@@ -280,109 +286,49 @@ class DataCatalog:
 
         return sorted(filtered)
 
-    def _load_dataset_row(self, row, ignore_dirs = None, **kwargs):
+    def _get_loader(self, name):
         """
-        Load all files for a dataset row, with optional directory filtering.
+        Retrieve a loader function by name from the loaders module.
         """
 
-        # Extract parameters from row
+        if name is None:
+            return None
+
+        try:
+            loader = getattr(loaders, name)
+        except AttributeError:
+            raise ValueError(f"Loader '{name}' not found in loaders module.")
+
+        if not callable(loader):
+            raise ValueError(f"Loader '{name}' exists but is not callable.")
+
+        return loader
+
+    def _extract_row_params(self, row):
+    
+        # Extract common parameters from row
         path = Path(row["full_path"])
         ext  = row["extension"].lstrip(".")
         skip_lines = row.get("skip_lines", 0)
         no_data = row.get("no_data_value", None)
-        if ignore_dirs is None:
-            ignore_dirs = row.get("ignore_dirs", None)
-        
-        # Find files
-        files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs)
+        ignore_dirs = row.get("ignore_dirs", None)
+    
+        return path, ext, skip_lines, no_data, ignore_dirs
 
-        # If no files found, raise error
-        if not files:
-            raise FileNotFoundError(
-                f"No files found with extension '{ext}' in {path}\n"
-                f"Ignoring directories: {ignore_dirs}"
-            )
+    def _load_dataset_row(self, row, **kwargs):
+        """
+        Load all files for a dataset row, with optional directory filtering.
+        """
 
-        # Load based on extension type
-        # ------------------------------
-        # CSV -> Pandas
-        if ext == "csv":
+        loader = getattr(row, "loader", "default")
+        loader_func = self._get_loader(loader)
 
-            # Get kwargs (or set defaults)
-            low_memory = kwargs.pop("low_memory", False)
-            
-            # Load each CSV into a DataFrame and append to data_list
-            data_list = []
-            for f in files:
-                data = pd.read_csv(f, skiprows = skip_lines, low_memory = low_memory, **kwargs)
-                data_list.append(data)
-            
-            # Concatenate all CSVs into a single DataFrame
-            output = pd.concat(data_list, ignore_index = True)
+        if loader_func is None:
+            raise ValueError(f"No loader function specified for dataset '{row.dataset}'.")
 
-            # Replace no_data values with NaN if specified
-            if no_data is not None:
-                output = output.replace(no_data, np.nan)
+        return loader_func(self, row, **kwargs)
 
-            return output 
-
-        # GPKG / SHP -> GeoPandas
-        if ext in ("gpkg", "shp"):
-            
-            # Load each file into a GeoDataFrame and append to data_list
-            data_list = []
-            for f in files:
-                data = gpd.read_file(f)
-                data_list.append(data)
-            
-            # Concatenate all GeoDataFrames into a single GeoDataFrame
-            output = gpd.GeoDataFrame(pd.concat(data_list, ignore_index = True))
-
-            # Replace no_data values with NaN if specified
-            if no_data is not None:
-                output = output.replace(no_data, np.nan)
-
-            return output
-
-        # TIF -> rioxarray / xarray
-        if ext in ("tif"):
-
-            # Get kwargs (or set defaults)
-            masked = kwargs.pop("masked", True)
-            
-            # Load each TIF into an xarray DataArray and store in a dict. Using masked = True automates handling of NaN values.
-            data_dict = {}
-            for f in files:
-                name = f.stem
-                data = rxr.open_rasterio(f, masked = masked)
-
-                # Squeeze out single-size 'band' dimension if present
-                if "band" in data.dims and data.band.size == 1:
-                    data = data.squeeze("band", drop = True)
-
-                # Store in dict
-                data_dict[name] = data
-
-            # Combine all DataArrays into a single Dataset
-            output = xr.Dataset(data_dict)
-
-            return output
-
-        # NetCDF -> xarray
-        if ext in ("nc"):
-
-            # Get kwargs (or set defaults)
-            combine = kwargs.pop("combine", "by_coords")
-
-            output = xr.open_mfdataset(files,
-                                       combine = combine,
-                                       **kwargs)
-
-            return output
-
-        raise ValueError(f"Extension '{ext}' is currently not supported for loading. Use one of: csv, gpkg, shp, tif, nc.")
-
-    def load_dataset(self, dataset, version, subdataset = None, ignore_dirs = None, **kwargs):
+    def load_dataset(self, dataset, version, subdataset = None, **kwargs):
         """
         Load any dataset by name/version/subdataset with optional directory filtering.
 
@@ -440,7 +386,7 @@ class DataCatalog:
 
         # Load dataset from the single matching row
         row = subset.iloc[0]
-        data = self._load_dataset_row(row, ignore_dirs = ignore_dirs, **kwargs)
+        data = self._load_dataset_row(row, **kwargs)
         
         return data
 

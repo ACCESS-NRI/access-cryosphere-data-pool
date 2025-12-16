@@ -174,3 +174,24 @@ datasets:
           subpath: 20km
         50km:
           subpath: 50km
+  
+  # ICE VELOCITY DATASETS
+  measures_annual_antarctic_ice_velocity_maps:
+    path: /g/data/av17/access-nri/cryosphere-data-pool/ice_velocity/measures_annual_antarctic_ice_velocity_maps
+    display_name: MEaSUREs Annual Antarctic Ice Velocity Maps
+    description: Annual ice velocity maps for Antarctica from the MEaSUREs program, providing ice flow velocities at various resolutions.
+    tags:
+      - antarctica
+      - ice velocity
+    extension: nc
+    loader: measures_velocity
+
+  measures_insar_based_antarctica_ice_velocity_map:
+    path: /g/data/av17/access-nri/cryosphere-data-pool/ice_velocity/measures_insar_based_antarctica_ice_velocity_map
+    display_name: InSAR-based Antarctica Ice Velocity Map
+    description: High-resolution ice velocity map for Antarctica derived from Interferometric Synthetic Aperture Radar (InSAR) data.
+    tags:
+      - antarctica
+      - ice velocity
+      - insar
+    extension: nc
