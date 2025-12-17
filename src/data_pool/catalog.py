@@ -72,40 +72,78 @@ class DataCatalog:
             if p.is_dir()
         ])
 
-    def _get_metadata(self, meta, version, key, default = None):
-        """
-        Resolve metadata value with optional per-version overrides.
-        
-        meta[key] can be a scalar, or a dict keyed by version.
-        """
-
-        value = meta.get(key, default)
-
-        if isinstance(value, dict):
-            return value.get(version, default)
-        else:
-            return value
-
     def _resolve_metadata(self, meta, subds_meta, version, key, default = None):
         """
-        Resolve metadata value with subdataset and per-version overrides.
-        
-        Priority:
-        1. subds_meta[key] (can be scalar or dict by version)
-        2. meta[key] (can be scalar or dict by version)
-        3. default
+        Resolve a metadata value for a dataset, supporting dataset-level and
+        subdataset-level overrides, including optional per-version dictionaries.
+
+        Resolution priority (highest → lowest):
+
+            1. Subdataset-level value (``subds_meta[key]``)
+            2. Dataset-level value (``meta[key]``)
+            3. ``default``
+
+        If a metadata value is a dictionary and contains a version key
+        (e.g. ``{"v1": ..., "v2": ...}``), the value corresponding to the
+        requested version is returned.
+
+        Parameters
+        ----------
+        meta : dict
+            Dataset-level metadata dictionary parsed from the YAML configuration.
+        subds_meta : dict
+            Subdataset-level metadata dictionary parsed from the YAML configuration.
+        version : str
+            Dataset version identifier (e.g. ``"v1"``, ``"v2"``). Used to resolve
+            version-specific metadata entries when values are dictionaries.
+        key : str
+            Metadata key to resolve (e.g. ``"resolutions"``,
+            ``"composite_patterns"``, ``"extension"``).
+        default : Any, optional
+            Value returned if the key is not found at either dataset or
+            subdataset level, or if the key exists but does not define the
+            requested version. Default is ``None``.
+
+        Returns
+        -------
+        resolved : Any
+            The resolved metadata value. This may be a scalar (e.g. ``str``),
+            a dictionary, or ``None`` if not found and no default is provided.
+
+        Notes
+        -----
+        - Subdataset-level metadata always takes precedence over dataset-level
+        metadata.
+        - Dictionary-valued metadata may optionally be keyed by version.
+        - Designed to support flexible YAML layouts where metadata may be
+        specified at different hierarchy levels.
         """
 
-        # First check subdataset-level metadata
-        subds_value = self._get_metadata(subds_meta, version, key, None)
-        if subds_value is not None:
+        # Ensure subds_meta is a dict
+        subds_meta = subds_meta or {}
+
+        # Check subdataset-level metadata first (highest priority)
+        subds_value = subds_meta.get(key, None)
+
+        if isinstance(subds_value, dict):
+            # If the value is a dict, attempt to resolve by version.
+            # If no version key is found, return the entire dict.
+            return subds_value.get(version, subds_value)
+        elif subds_value is not None:
+            # Scalar value found at subdataset level
             return subds_value
-        
+
         # Fallback to dataset-level metadata
-        ds_value = self._get_metadata(meta, version, key, None)
-        if ds_value is not None:
+        ds_value = meta.get(key, None)
+
+        if isinstance(ds_value, dict):
+            # Dataset-level dic may define version-specific entries
+            return ds_value.get(version, default)
+        elif ds_value is not None:
+            # Scalar value found at dataset level
             return ds_value
 
+        # Nothing found - return default
         return default
 
     def _normalise_list(self, value):
@@ -172,10 +210,13 @@ class DataCatalog:
                         ignore_dirs = self._resolve_metadata(meta, subds_meta, version, "ignore_dirs", None)
                         ignore_files = self._resolve_metadata(meta, subds_meta, version, "ignore_files", None)
                         loader = self._resolve_metadata(meta, subds_meta, version, "loader", "default")
+                        resolutions = self._resolve_metadata(meta, subds_meta, version, "resolutions")
+                        composite_patterns = self._resolve_metadata(meta, subds_meta, version, "composite_patterns", [])
                         
                         # Normalise lists as needed
                         ignore_dirs = self._normalise_list(ignore_dirs)
                         ignore_files = self._normalise_list(ignore_files)
+                        composite_patterns = self._normalise_list(composite_patterns)
 
                         # Error checks
                         if not subpath:
@@ -202,6 +243,8 @@ class DataCatalog:
                             "ignore_dirs": ignore_dirs,
                             "ignore_files": ignore_files,
                             "loader": loader,
+                            "resolutions": resolutions,
+                            "composite_patterns": composite_patterns,
                         })
 
             # VERSIONED DATASETS (no subdatasets)
@@ -211,16 +254,19 @@ class DataCatalog:
                 for version in versions:
                     
                     # Extract dataset-level metadata (version-specific if applicable)
-                    extension = self._get_metadata(meta, version, "extension")
-                    skip_lines = self._get_metadata(meta, version, "skip_lines", 0)
-                    no_data_value = self._get_metadata(meta, version, "no_data_value", None)
-                    ignore_dirs = self._get_metadata(meta, version, "ignore_dirs", None)
-                    ignore_files = self._get_metadata(meta, version, "ignore_files", None)
-                    loader = self._get_metadata(meta, version, "loader", "default")
+                    extension = self._resolve_metadata(meta, None, version, "extension")
+                    skip_lines = self._resolve_metadata(meta, None, version, "skip_lines", 0)
+                    no_data_value = self._resolve_metadata(meta, None, version, "no_data_value", None)
+                    ignore_dirs = self._resolve_metadata(meta, None, version, "ignore_dirs", None)
+                    ignore_files = self._resolve_metadata(meta, None, version, "ignore_files", None)
+                    loader = self._resolve_metadata(meta, None, version, "loader", "default")
+                    resolutions = self._resolve_metadata(meta, None, version, "resolutions")
+                    composite_patterns = self._resolve_metadata(meta, None, version, "composite_patterns", [])
 
                     # Normalise lists as needed
                     ignore_dirs = self._normalise_list(ignore_dirs)
                     ignore_files = self._normalise_list(ignore_files)
+                    composite_patterns = self._normalise_list(composite_patterns)
 
                     # Error check
                     if not extension:
@@ -245,6 +291,8 @@ class DataCatalog:
                         "ignore_dirs": ignore_dirs,
                         "ignore_files": ignore_files,
                         "loader": loader,
+                        "resolutions": resolutions,
+                        "composite_patterns": composite_patterns,
                     })
 
         return pd.DataFrame(records)
@@ -276,30 +324,34 @@ class DataCatalog:
         # Ensure provided extension does not start with dot
         ext = extension.lstrip(".")
 
-        # Default ignore_dirs to empty list if None
-        if ignore_dirs is None:
-            ignore_dirs = []
-
-        if ignore_files is None:
-            ignore_files = []
-
         # Recursively find all files with the given extension
         files = root.rglob(f"*.{ext}")
 
-        # Filter out any path containing one of the ignored directory names
-        filtered = []
-        for f in files:
-            reject = any(bad in f.as_posix() for bad in ignore_dirs)
-            if not reject:
-                filtered.append(f)
+        # If ignore_dirs is provided, filter out matching directories
+        if ignore_dirs is None:
+            pass
+        else:
+            # Filter out any path containing one of the ignored directory names
+            filtered = []
+            for f in files:
+                reject = any(bad in f.as_posix() for bad in ignore_dirs)
+                if not reject:
+                    filtered.append(f)
+            files = filtered
         
-        # Further filter out any files whose names contain one of the ignored file name substrings
-        for f in filtered:
-            reject = any(bad in f.name for bad in ignore_files)
-            if not reject:
-                filtered.append(f)
+        # If ignore_files is provided, filter out matching file names
+        if ignore_files is None:
+            pass
+        else:
+            filtered = []
+            # Further filter out any files whose names contain one of the ignored file name substrings
+            for f in files:
+                reject = any(bad in f.as_posix() for bad in ignore_files)
+                if not reject:
+                    filtered.append(f)
+            files = filtered
 
-        return sorted(filtered)
+        return sorted(files)
 
     def _get_loader(self, name):
         """
@@ -328,8 +380,11 @@ class DataCatalog:
         no_data = row.get("no_data_value", None)
         ignore_dirs = row.get("ignore_dirs", None)
         ignore_files = row.get("ignore_files", None)
+        loader = row.get("loader", "default")
+        resolutions = row.get("resolutions")
+        composite_patterns = row.get("composite_patterns", [])
     
-        return path, ext, skip_lines, no_data, ignore_dirs, ignore_files
+        return path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns
 
     def _load_dataset_row(self, row, **kwargs):
         """

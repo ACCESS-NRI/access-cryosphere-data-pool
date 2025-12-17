@@ -236,10 +236,84 @@ datasets:
       - ice velocity
     extension: nc
     loader: measures_velocity
+    resolutions:
+      v1: 
+        annual:
+          240m: G0240
+        composite:
+          120m: G0120
+          240m: G0240
+    composite_patterns:
+      v1: "_0000"
+      v2: "_2014-2022_"
     subdatasets:
       v1:
         ANT:
           subpath: ANT
-          ignore_files:
-            - ANT_G0120_0000.nc
-            - ANT_G0240_0000.nc
+        ALA:
+          subpath: ALA
+          resolutions:
+            annual:
+              120m: G0120
+              240m: G0240
+            composite:
+              120m: G0120
+              240m: G0240
+        CAN:
+          subpath: CAN
+        GRE:
+          subpath: GRE
+        HMA:
+          subpath: HMA
+        ICE: 
+          subpath: ICE
+        PAT: 
+          subpath: PAT
+        SRA:
+          subpath: SRA
+          resolutions:
+            annual:
+              120m: G0120
+              240m: G0240
+            composite:
+              120m: G0120
+              240m: G0240
+      v2:
+        RGI01A:
+          subpath: RGI01A
+        RGI02A:
+          subpath: RGI02A
+        RGI03A: 
+          subpath: RGI03A
+        RGI04A:
+          subpath: RGI04A
+        RGI05A:
+          subpath: RGI05A
+        RGI06A:
+          subpath: RGI06A
+        RGI07A:
+          subpath: RGI07A
+        RGI08A:
+          subpath: RGI08A
+        RGI09A:
+          subpath: RGI09A
+        RGI10A:
+          subpath: RGI10A
+        RGI11A:
+          subpath: RGI11A
+        RGI12A:
+          subpath: RGI12A
+        RGI13A:
+          subpath: RGI13A
+        RGI14A:
+          subpath: RGI14A
+        RGI15A:
+          subpath: RGI15A
+        RGI16A:
+          subpath: RGI16A
+        RGI17A:
+          subpath: RGI17A
+        RGI18A:
+          subpath: RGI18A
+        RGI19A:
+          subpath: RGI19A

@@ -11,7 +11,7 @@ import re
 def default(self, row, **kwargs):
 
     # Extract parameters from row
-    path, ext, skip_lines, no_data, ignore_dirs, ignore_files = self._extract_row_params(row)
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
         
     # Find files
     files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
@@ -135,7 +135,73 @@ def _extract_year_range_from_filename(filename):
     years = sorted(set(years))
     return years[0], years[-1]
 
-def measures_velocity(self, row, **kwargs):
+def _filter_composite_resolution_files(files, resolution = None, composite = None, composite_patterns = None, resolutions = None):
+    
+    # Error checks
+    if not files:
+        raise ValueError("No files provided for filtering.")
+
+    ## Dataset defines resolution metadata -- user must specify resolution
+    if resolutions is not None and resolution is None:
+        raise ValueError(
+            "This dataset defines multiple resolutions. "
+            "You must explicitly specify `resolution=...`."
+        )
+
+    ## User specified resolution, but dataset has no resolution metadata
+    if resolutions is None and resolution is not None:
+        raise ValueError(
+            "A resolution was specified, but this dataset does not define "
+            "any resolution metadata."
+        )
+
+    ## Dataset defines composite patterns -- user must specify composite flag
+    if composite_patterns and composite is None:
+        raise ValueError(
+            "This dataset defines composite files. "
+            "You must explicitly specify `composite=True` or `composite=False`."
+        )
+
+    ## User requested composite, but dataset does not support it
+    if composite and not composite_patterns:
+        raise ValueError(
+            "Composite data was requested, but this dataset does not "
+            "define any composite patterns."
+        )
+
+    # Ensure composite_patterns is a list
+    composite_patterns = composite_patterns or []
+
+    # Isolate composite or annual files
+    if composite:
+        # Get only composite files
+        files = [f for f in files if any(pattern in f.name for pattern in composite_patterns)]
+    else:
+        # Get only annual files (Exclude composite patterns)
+        files = [f for f in files if not any(pattern in f.name for pattern in composite_patterns)]
+
+    # Filter by resolution if specified
+    if resolution is not None:
+
+        # Determine mode based on composite flag
+        mode = "composite" if composite else "annual"
+
+        # Validate mode and resolution. Ensure resolutions are available for the specified mode.
+        if mode not in resolutions:
+            raise ValueError(f"Mode '{mode}' not found in resolution metadata.")
+
+        # Ensure the specified resolution exists for the mode
+        if resolution not in resolutions[mode]:
+            raise ValueError(f"Resolution '{resolution}' not found for mode '{mode}' in resolution metadata."
+                            f" Available resolutions: {list(resolutions[mode].keys())}")
+
+        # Filter files by resolution token
+        token = resolutions[mode][resolution]
+        files = [f for f in files if token in f.name]
+
+    return files
+
+def measures_velocity(self, row, resolution = None, composite = None, **kwargs):
     
     def _preprocessor(ds):
         """
@@ -170,25 +236,41 @@ def measures_velocity(self, row, **kwargs):
         return ds.expand_dims(time = time_da)
 
     # Extract parameters from row
-    path, ext, skip_lines, no_data, ignore_dirs, ignore_files = self._extract_row_params(row)
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+
+    # Normalise lists as needed
+    ignore_dirs = self._normalise_list(ignore_dirs)
+    ignore_files = self._normalise_list(ignore_files)
+    composite_patterns = self._normalise_list(composite_patterns)
         
     # Find files
     files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
 
+    # Filter files based on composite flag and resolution
+    files = _filter_composite_resolution_files(
+        files,
+        resolution = resolution,
+        composite = composite,
+        composite_patterns = composite_patterns,
+        resolutions = resolutions
+    )
+
     # If no files found, raise error
     if not files:
         raise FileNotFoundError(
-            f"No files found with extension '{ext}' in {path}\n"
-            f"Ignoring directories: {ignore_dirs}"
+            f"No files found with extension '{ext}' in {path}"
         )
 
     # Get kwargs (or set defaults)
     combine = kwargs.pop("combine", "by_coords")
 
-    # Load NetCDF files with preprocessing to add time dimension. Combine by (all) coordinates.
+    # Only use preprocessor for annual mode (no time dimension needed in composite files)
+    preprocess_func = _preprocessor if not composite else None
+
+    # Load NetCDF files with preprocessing (if necessary)
     output = xr.open_mfdataset(files,
                             combine = combine,
-                            preprocess = _preprocessor,
+                            preprocess = preprocess_func,
                             parallel = True,
                             **kwargs)
     
