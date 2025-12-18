@@ -275,3 +275,103 @@ def measures_velocity(self, row, resolution = None, composite = None, **kwargs):
                             **kwargs)
     
     return output
+
+def racmo_23(self, row, **kwargs):
+
+    def _preprocessor(ds):
+        """
+        Preprocess each dataset to drop unnecessary variables and set coordinates.
+        """
+        DROP_VARS = {"block1", "block2"}
+
+        ds = ds.set_coords(["rlat", "rlon"])
+
+        return ds.drop_vars(DROP_VARS & set(ds.variables))
+
+    # Extract parameters from row
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+
+    # Normalise lists as needed
+    ignore_dirs = self._normalise_list(ignore_dirs)
+    ignore_files = self._normalise_list(ignore_files)
+    composite_patterns = self._normalise_list(composite_patterns)
+        
+    # Find files
+    files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
+
+    # If no files found, raise error
+    if not files:
+        raise FileNotFoundError(
+            f"No files found with extension '{ext}' in {path}"
+        )
+
+    # Get kwargs (or set defaults)
+    combine = kwargs.pop("combine", "by_coords")
+    join = kwargs.pop("join", "outer")
+    compat = kwargs.pop("compat", "override")
+    combine_attrs = kwargs.pop("combine_attrs", "drop_conflicts")
+
+    # Load NetCDF files with preprocessing (if necessary)
+    output = xr.open_mfdataset(files,
+                            combine = combine,
+                            join = join,
+                            compat = compat,
+                            combine_attrs = combine_attrs,
+                            preprocess = _preprocessor,
+                            parallel = True,
+                            **kwargs)
+
+    # Warn users about varying timesteps
+    print("WARNING: Timesteps vary between various variables/files. All data files are loaded using\n"
+          "xr.open_mfdataset() and the timestamps are merged. As a result, all-NaN arrays are introduced\n"
+          "for timesteps where a given variable does not have data. Users should use caution when considering\n"
+          "time-varying analysis and might consider 'trimming' data to isolate all non-NaN arrays for a given variable.")
+    
+    return output
+
+def racmo_24(self, row, **kwargs):
+
+    def _preprocessor(ds):
+        """
+        Preprocess each dataset to drop unnecessary variables and set coordinates.
+        """
+        DROP_VARS = {"block1", "block2"}
+
+        ds = ds.set_coords(["rlat", "rlon"])
+
+        return ds.drop_vars(DROP_VARS & set(ds.variables))
+
+    # Extract parameters from row
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+
+    # Normalise lists as needed
+    ignore_dirs = self._normalise_list(ignore_dirs)
+    ignore_files = self._normalise_list(ignore_files)
+    composite_patterns = self._normalise_list(composite_patterns)
+        
+    # Find files
+    files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
+
+    # If no files found, raise error
+    if not files:
+        raise FileNotFoundError(
+            f"No files found with extension '{ext}' in {path}"
+        )
+
+    # Get kwargs (or set defaults)
+    combine = kwargs.pop("combine", "by_coords")
+    join = kwargs.pop("join", "outer")
+    compat = kwargs.pop("compat", "override")
+    combine_attrs = kwargs.pop("combine_attrs", "drop_conflicts")
+
+    # Load NetCDF files with preprocessing (if necessary)
+    output = xr.open_mfdataset(files,
+                            combine = combine,
+                            join = join,
+                            compat = compat,
+                            combine_attrs = combine_attrs,
+                            preprocess = _preprocessor,
+                            parallel = True,
+                            **kwargs)
+    
+    return output

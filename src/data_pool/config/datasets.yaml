@@ -317,3 +317,37 @@ datasets:
           subpath: RGI18A
         RGI19A:
           subpath: RGI19A
+  
+  # SURFACE FORCING DATASETS
+  racmo2.3p2_monthly_27km_1979-2022:
+    path: /g/data/av17/access-nri/cryosphere-data-pool/surface_forcing/racmo2.3p2_monthly_27km_1979-2022
+    display_name: RACMO2.3p2 Monthly Surface Mass Balance and Climate Data at 27 km Resolution (1979-2022)
+    description: Regional Atmospheric Climate Model (RACMO) version 2.3p2 monthly surface mass balance and climate data for Antarctica at 27 km resolution, covering the years 1979 to 2022.
+    tags:
+      - antarctica
+      - surface mass balance
+      - climate data
+      - racmo
+    extension: nc
+    loader: racmo
+    ignore_files:
+    # Ignore static mask files that do not integrate with variable files well
+      v1:
+        - Height_latlon_ANT27.nc
+        - TotIS_RACMO_ANT27_IMBIE2.nc
+
+  racmo2.4p1_monthly_11km_1979-2023:
+    path: /g/data/av17/access-nri/cryosphere-data-pool/surface_forcing/racmo2.4p1_monthly_11km_1979-2023
+    display_name: RACMO2.4p1 Monthly Surface Mass Balance and Climate Data at 11 km Resolution (1979-2023)
+    description: Regional Atmospheric Climate Model (RACMO) version 2.4p1 monthly surface mass balance and climate data for Antarctica at 11 km resolution, covering the years 1979 to 2023.
+    tags:
+      - antarctica
+      - surface mass balance
+      - climate data
+      - racmo
+    extension: nc
+    loader: racmo_24
+    ignore_files:
+    # Ignore static mask files that do not integrate with variable files well
+      v1:
+        - ANT11_masks.nc
