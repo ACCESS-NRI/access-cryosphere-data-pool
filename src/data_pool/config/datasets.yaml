@@ -168,12 +168,13 @@ datasets:
       - antarctica
       - geothermal heat flow
     extension: nc
-    subdatasets:
+    resolutions:
       v1:
-        20km:
-          subpath: 20km
-        50km:
-          subpath: 50km
+        static:
+          20km: "20"
+          50km: "50"
+    static_patterns:
+      v1: "aq1_01_"
   
   # ICE VELOCITY DATASETS
   measures_annual_antarctic_ice_velocity_maps:
@@ -240,10 +241,10 @@ datasets:
       v1: 
         annual:
           240m: G0240
-        composite:
+        static:
           120m: G0120
           240m: G0240
-    composite_patterns:
+    static_patterns:
       v1: "_0000"
       v2: "_2014-2022_"
     subdatasets:
@@ -256,7 +257,7 @@ datasets:
             annual:
               120m: G0120
               240m: G0240
-            composite:
+            static:
               120m: G0120
               240m: G0240
         CAN:
@@ -275,7 +276,7 @@ datasets:
             annual:
               120m: G0120
               240m: G0240
-            composite:
+            static:
               120m: G0120
               240m: G0240
       v2:

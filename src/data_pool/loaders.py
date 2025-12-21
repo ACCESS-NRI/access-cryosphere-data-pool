@@ -9,13 +9,64 @@ from datetime import datetime
 import re
 import warnings
 
-def default(self, row, **kwargs):
+def default(self, row, resolution = None, static = True, **kwargs):
+    """
+    Default loader function to load data based on file extension.
+
+    Parameters
+    ----------
+    self : object
+        The class instance.
+    row : dict
+        A dictionary containing dataset metadata including file path, extension,
+        and loading parameters.
+    resolution : str, optional
+        The resolution to filter files by. Required if the dataset defines
+        multiple resolutions. Default is None.
+    static : bool, optional
+        Flag indicating whether to load static files (True).
+        Default is True. The default loader only supports static files.
+    **kwargs : dict
+        Additional keyword arguments passed to the underlying loading functions
+        (e.g., pd.read_csv, gpd.read_file, rxr.open_rasterio, xr.open_mfdataset).
+
+    Returns
+    -------
+    pd.DataFrame or gpd.GeoDataFrame or xr.Dataset
+        The loaded data in the appropriate format based on file extension:
+        - 'csv': pandas.DataFrame
+        - 'gpkg' or 'shp': geopandas.GeoDataFrame
+        - 'tif': xarray.Dataset
+        - 'nc': xarray.Dataset
+
+    Raises
+    ------
+    FileNotFoundError
+        If no files matching the criteria are found.
+    ValueError
+        If the file extension is not supported.
+    """
+    
+    # Ensure static flag is True for default loader
+    if static is not True:
+        raise ValueError("The default loader only supports static files. "
+                         "To load annual files, please use a custom loader function.")
 
     # Extract parameters from row
-    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, static_patterns = self._extract_row_params(row)
         
     # Find files
     files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
+
+    # Filter files based on resolution if specified.
+    if resolution is not None:
+        files = _filter_static_resolution_files(
+            files,
+            resolution = resolution,
+            static = static,
+            static_patterns = static_patterns,
+            resolutions = resolutions
+        )
 
     # If no files found, raise error
     if not files:
@@ -136,7 +187,7 @@ def _extract_year_range_from_filename(filename):
     years = sorted(set(years))
     return years[0], years[-1]
 
-def _filter_composite_resolution_files(files, resolution = None, composite = None, composite_patterns = None, resolutions = None):
+def _filter_static_resolution_files(files, resolution = None, static = None, static_patterns = None, resolutions = None):
     
     # Error checks
     if not files:
@@ -156,36 +207,36 @@ def _filter_composite_resolution_files(files, resolution = None, composite = Non
             "any resolution metadata."
         )
 
-    ## Dataset defines composite patterns -- user must specify composite flag
-    if composite_patterns and composite is None:
+    ## Dataset defines static patterns -- user must specify static flag
+    if static_patterns and static is None:
         raise ValueError(
-            "This dataset defines composite files. "
-            "You must explicitly specify `composite=True` or `composite=False`."
+            "This dataset defines static files. "
+            "You must explicitly specify `static=True` or `static=False`."
         )
 
-    ## User requested composite, but dataset does not support it
-    if composite and not composite_patterns:
+    ## User requested static, but dataset does not support it
+    if static and not static_patterns:
         raise ValueError(
-            "Composite data was requested, but this dataset does not "
-            "define any composite patterns."
+            "static data was requested, but this dataset does not "
+            "define any static patterns."
         )
 
-    # Ensure composite_patterns is a list
-    composite_patterns = composite_patterns or []
+    # Ensure static_patterns is a list
+    static_patterns = static_patterns or []
 
-    # Isolate composite or annual files
-    if composite:
-        # Get only composite files
-        files = [f for f in files if any(pattern in f.name for pattern in composite_patterns)]
+    # Isolate static or annual files
+    if static:
+        # Get only static files
+        files = [f for f in files if any(pattern in f.name for pattern in static_patterns)]
     else:
-        # Get only annual files (Exclude composite patterns)
-        files = [f for f in files if not any(pattern in f.name for pattern in composite_patterns)]
+        # Get only annual files (Exclude static patterns)
+        files = [f for f in files if not any(pattern in f.name for pattern in static_patterns)]
 
     # Filter by resolution if specified
     if resolution is not None:
 
-        # Determine mode based on composite flag
-        mode = "composite" if composite else "annual"
+        # Determine mode based on static flag
+        mode = "static" if static else "annual"
 
         # Validate mode and resolution. Ensure resolutions are available for the specified mode.
         if mode not in resolutions:
@@ -202,7 +253,7 @@ def _filter_composite_resolution_files(files, resolution = None, composite = Non
 
     return files
 
-def measures_velocity(self, row, resolution = None, composite = None, **kwargs):
+def measures_velocity(self, row, resolution = None, static = None, **kwargs):
     
     def _preprocessor(ds):
         """
@@ -237,22 +288,22 @@ def measures_velocity(self, row, resolution = None, composite = None, **kwargs):
         return ds.expand_dims(time = time_da)
 
     # Extract parameters from row
-    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, static_patterns = self._extract_row_params(row)
 
     # Normalise lists as needed
     ignore_dirs = self._normalise_list(ignore_dirs)
     ignore_files = self._normalise_list(ignore_files)
-    composite_patterns = self._normalise_list(composite_patterns)
+    static_patterns = self._normalise_list(static_patterns)
         
     # Find files
     files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)
 
-    # Filter files based on composite flag and resolution
-    files = _filter_composite_resolution_files(
+    # Filter files based on static flag and resolution
+    files = _filter_static_resolution_files(
         files,
         resolution = resolution,
-        composite = composite,
-        composite_patterns = composite_patterns,
+        static = static,
+        static_patterns = static_patterns,
         resolutions = resolutions
     )
 
@@ -265,8 +316,8 @@ def measures_velocity(self, row, resolution = None, composite = None, **kwargs):
     # Get kwargs (or set defaults)
     combine = kwargs.pop("combine", "by_coords")
 
-    # Only use preprocessor for annual mode (no time dimension needed in composite files)
-    preprocess_func = _preprocessor if not composite else None
+    # Only use preprocessor for annual mode (no time dimension needed in static files)
+    preprocess_func = _preprocessor if not static else None
 
     # Load NetCDF files with preprocessing (if necessary)
     output = xr.open_mfdataset(files,
@@ -290,12 +341,12 @@ def racmo(self, row, **kwargs):
         return ds.drop_vars(DROP_VARS & set(ds.variables))
 
     # Extract parameters from row
-    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns = self._extract_row_params(row)
+    path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, static_patterns = self._extract_row_params(row)
 
     # Normalise lists as needed
     ignore_dirs = self._normalise_list(ignore_dirs)
     ignore_files = self._normalise_list(ignore_files)
-    composite_patterns = self._normalise_list(composite_patterns)
+    static_patterns = self._normalise_list(static_patterns)
         
     # Find files
     files = self._recursive_find_files(path, ext, ignore_dirs = ignore_dirs, ignore_files = ignore_files)

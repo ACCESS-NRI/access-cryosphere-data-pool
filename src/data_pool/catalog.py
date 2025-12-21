@@ -102,7 +102,7 @@ class DataCatalog:
             version-specific metadata entries when values are dictionaries.
         key : str
             Metadata key to resolve (e.g. ``"resolutions"``,
-            ``"composite_patterns"``, ``"extension"``).
+            ``"static_patterns"``, ``"extension"``).
         default : Any, optional
             Value returned if the key is not found at either dataset or
             subdataset level, or if the key exists but does not define the
@@ -215,12 +215,12 @@ class DataCatalog:
                         ignore_files = self._resolve_metadata(meta, subds_meta, version, "ignore_files", None)
                         loader = self._resolve_metadata(meta, subds_meta, version, "loader", "default")
                         resolutions = self._resolve_metadata(meta, subds_meta, version, "resolutions")
-                        composite_patterns = self._resolve_metadata(meta, subds_meta, version, "composite_patterns", [])
+                        static_patterns = self._resolve_metadata(meta, subds_meta, version, "static_patterns", [])
                         
                         # Normalise lists as needed
                         ignore_dirs = self._normalise_list(ignore_dirs)
                         ignore_files = self._normalise_list(ignore_files)
-                        composite_patterns = self._normalise_list(composite_patterns)
+                        static_patterns = self._normalise_list(static_patterns)
 
                         # Error checks
                         if not subpath:
@@ -248,7 +248,7 @@ class DataCatalog:
                             "ignore_files": ignore_files,
                             "loader": loader,
                             "resolutions": resolutions,
-                            "composite_patterns": composite_patterns,
+                            "static_patterns": static_patterns,
                         })
 
             # VERSIONED DATASETS (no subdatasets)
@@ -265,12 +265,12 @@ class DataCatalog:
                     ignore_files = self._resolve_metadata(meta, None, version, "ignore_files", None)
                     loader = self._resolve_metadata(meta, None, version, "loader", "default")
                     resolutions = self._resolve_metadata(meta, None, version, "resolutions")
-                    composite_patterns = self._resolve_metadata(meta, None, version, "composite_patterns", [])
+                    static_patterns = self._resolve_metadata(meta, None, version, "static_patterns", [])
 
                     # Normalise lists as needed
                     ignore_dirs = self._normalise_list(ignore_dirs)
                     ignore_files = self._normalise_list(ignore_files)
-                    composite_patterns = self._normalise_list(composite_patterns)
+                    static_patterns = self._normalise_list(static_patterns)
 
                     # Error check
                     if not extension:
@@ -296,7 +296,7 @@ class DataCatalog:
                         "ignore_files": ignore_files,
                         "loader": loader,
                         "resolutions": resolutions,
-                        "composite_patterns": composite_patterns,
+                        "static_patterns": static_patterns,
                     })
 
         return pd.DataFrame(records)
@@ -386,9 +386,9 @@ class DataCatalog:
         ignore_files = row.get("ignore_files", None)
         loader = row.get("loader", "default")
         resolutions = row.get("resolutions")
-        composite_patterns = row.get("composite_patterns", [])
+        static_patterns = row.get("static_patterns", [])
     
-        return path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, composite_patterns
+        return path, ext, skip_lines, no_data, ignore_dirs, ignore_files, loader, resolutions, static_patterns
 
     def _load_dataset_row(self, row, **kwargs):
         """
@@ -673,7 +673,7 @@ class DataCatalog:
 
         CATALOG_KEYWORDS = {
             "resolution",
-            "composite",
+            "static",
             "subdataset"
         }
 
@@ -685,10 +685,10 @@ class DataCatalog:
                 raise TypeError(f"'resolution' is not applicable for dataset '{row.dataset}'."
                                 " This dataset does not define any resolution metadata.")
         
-        if "composite" in used:
-            if not row.composite_patterns:
-                raise TypeError(f"'composite' is not applicable for dataset '{row.dataset}'."
-                                " This dataset does not define any composite patterns.")
+        if "static" in used:
+            if not row.static_patterns:
+                raise TypeError(f"'static' is not applicable for dataset '{row.dataset}'."
+                                " This dataset does not define any static patterns.")
 
     def help(self, dataset = None, version = None):
         """
@@ -770,7 +770,7 @@ class DataCatalog:
         print("\nSupported catalog keywords:")
         print(f"  - subdataset : {'yes' if not subset.subdataset.isna().all() else 'no'}")
         print(f"  - resolution : {'yes' if row.resolutions is not None else 'no'}")
-        print(f"  - composite  : {'yes' if bool(row.composite_patterns) else 'no'}")
+        print(f"  - static  : {'yes' if bool(row.static_patterns) else 'no'}")
 
         # 6. Example usage
         # ------------------------------------------------------------------
@@ -784,8 +784,8 @@ class DataCatalog:
         if row.resolutions is not None:
             example += ", resolution = '...'"
 
-        if row.composite_patterns:
-            example += ", composite = True"
+        if row.static_patterns:
+            example += ", static = True"
 
         example += ")"
 
