@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "access-cryosphere-data-pool"
-version = "0.0.1.dev3"
+version = "0.0.1.dev4"
 description = "Cryosphere Community Datapool (CCD) and associated tools, managed by ACCESS-NRI"
 readme = "README.md"
 requires-python = ">=3.9"
