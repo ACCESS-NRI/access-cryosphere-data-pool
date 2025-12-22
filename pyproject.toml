@@ -27,6 +27,7 @@ dependencies = [
     "geopandas",
     "rioxarray",
     "numpy",
+    "yaml"
 ]
 
 [project.urls]
