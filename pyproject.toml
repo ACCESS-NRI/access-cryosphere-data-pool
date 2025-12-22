@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "access-cryosphere-data-pool"
+version = "0.0.1.dev1"
+description = "Cryosphere Community Datapool (CCD) and associated tools, managed by ACCESS-NRI"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+
+authors = [
+    { name = "ACCESS-NRI" },
+]
+
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "xarray",
+    "pandas",
+    "geopandas",
+    "rioxarray",
+    "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com/ACCESS-NRI/access-cryosphere-data-pool"
+Repository = "https://github.com/ACCESS-NRI/access-cryosphere-data-pool"
+Issues = "https://github.com/ACCESS-NRI/access-cryosphere-data-pool/issues"
