@@ -1,12 +1,21 @@
 name: Release access-cryosphere-data-pool
 
+# Trigger release on push to tags starting with 'v'
 on:
-  workflow_dispatch:
   push:
     tags:
       - 'v*'
+
+# Define jobs
 jobs:
+
+  # Job 1: Check dependencies and installation
+  check_dependencies:
+    uses: access-nri/access-cryosphere-data-pool/.github/workflows/check-dependencies.yml@lb/231225_workflows
+    
+  # Job 2: Publish Python package to PyPI and Conda
   publish_python_package:
+    needs: check_dependencies
     uses: access-nri/actions/.github/workflows/publish-python-package.yml@main
     with:
       pypi-package: true
@@ -14,7 +23,8 @@ jobs:
     secrets: inherit
     permissions:
       actions: write
-  
+
+  # Job 3: Create GitHub Release
   create-github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
