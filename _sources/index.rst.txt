@@ -21,6 +21,7 @@ To get started with access-cryosphere-data-pool, please refer to the `installati
 Contributing
 -------------------
 We welcome contributions from the community! If you're interested in contributing to access-cryosphere-data-pool development or documentation, please check out our `contributing guidelines <contributing>`_.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
