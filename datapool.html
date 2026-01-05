@@ -18,9 +18,7 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Contributing" href="contributing.html" />
-    <link rel="prev" title="datapool" href="modules.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,31 +40,36 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">datapool</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">datapool package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-datapool.catalog">datapool.catalog module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#datapool.catalog.DataCatalog"><code class="docutils literal notranslate"><span class="pre">DataCatalog</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-datapool.loaders">datapool.loaders module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#datapool.loaders.default"><code class="docutils literal notranslate"><span class="pre">default()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#datapool.loaders.measures_velocity"><code class="docutils literal notranslate"><span class="pre">measures_velocity()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#datapool.loaders.racmo"><code class="docutils literal notranslate"><span class="pre">racmo()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-datapool">Module contents</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">datapool package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-datapool.catalog">datapool.catalog module</a><ul>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog"><code class="docutils literal notranslate"><span class="pre">DataCatalog</span></code></a><ul>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.config_file"><code class="docutils literal notranslate"><span class="pre">DataCatalog.config_file</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.config"><code class="docutils literal notranslate"><span class="pre">DataCatalog.config</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.datasets"><code class="docutils literal notranslate"><span class="pre">DataCatalog.datasets</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_resolutions"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_resolutions()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_subdatasets"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_subdatasets()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_versions"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_versions()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.help"><code class="docutils literal notranslate"><span class="pre">DataCatalog.help()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.load_dataset"><code class="docutils literal notranslate"><span class="pre">DataCatalog.load_dataset()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.search"><code class="docutils literal notranslate"><span class="pre">DataCatalog.search()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li><a class="reference internal" href="#module-datapool.loaders">datapool.loaders module</a><ul>
+<li><a class="reference internal" href="#datapool.loaders.default"><code class="docutils literal notranslate"><span class="pre">default()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.loaders.measures_velocity"><code class="docutils literal notranslate"><span class="pre">measures_velocity()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.loaders.racmo"><code class="docutils literal notranslate"><span class="pre">racmo()</span></code></a></li>
 </ul>
-
+</li>
+<li><a class="reference internal" href="#module-datapool">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
         </div>
       </div>
     </nav>
@@ -81,7 +84,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">datapool</a></li>
       <li class="breadcrumb-item active">datapool package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/datapool.rst.txt" rel="nofollow"> View page source</a>
@@ -324,10 +326,7 @@ Default is True. The default loader only supports static files.</p></li>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="datapool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
