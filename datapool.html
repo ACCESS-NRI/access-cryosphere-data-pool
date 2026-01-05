@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>datapool package &mdash; access-cryosphere-data-pool v0.0.1dev5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=cbb29cf4"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            access-cryosphere-data-pool
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">datapool package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-datapool.catalog">datapool.catalog module</a><ul>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog"><code class="docutils literal notranslate"><span class="pre">DataCatalog</span></code></a><ul>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.config_file"><code class="docutils literal notranslate"><span class="pre">DataCatalog.config_file</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.config"><code class="docutils literal notranslate"><span class="pre">DataCatalog.config</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.datasets"><code class="docutils literal notranslate"><span class="pre">DataCatalog.datasets</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_resolutions"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_resolutions()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_subdatasets"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_subdatasets()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.available_versions"><code class="docutils literal notranslate"><span class="pre">DataCatalog.available_versions()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.help"><code class="docutils literal notranslate"><span class="pre">DataCatalog.help()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.load_dataset"><code class="docutils literal notranslate"><span class="pre">DataCatalog.load_dataset()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.catalog.DataCatalog.search"><code class="docutils literal notranslate"><span class="pre">DataCatalog.search()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-datapool.loaders">datapool.loaders module</a><ul>
+<li><a class="reference internal" href="#datapool.loaders.default"><code class="docutils literal notranslate"><span class="pre">default()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.loaders.measures_velocity"><code class="docutils literal notranslate"><span class="pre">measures_velocity()</span></code></a></li>
+<li><a class="reference internal" href="#datapool.loaders.racmo"><code class="docutils literal notranslate"><span class="pre">racmo()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-datapool">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">access-cryosphere-data-pool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">datapool package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/datapool.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datapool-package">
+<h1>datapool package<a class="headerlink" href="#datapool-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-datapool.catalog">
+<span id="datapool-catalog-module"></span><h2>datapool.catalog module<a class="headerlink" href="#module-datapool.catalog" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">datapool.catalog.</span></span><span class="sig-name descname"><span class="pre">DataCatalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A catalog for managing and loading datasets with versioning and subdataset support.</p>
+<p>This class loads dataset configuration from a YAML file and provides methods to
+list, search, and load datasets with support for multiple versions and subdatasets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.config_file">
+<span class="sig-name descname"><span class="pre">config_file</span></span><a class="headerlink" href="#datapool.catalog.DataCatalog.config_file" title="Link to this definition"></a></dt>
+<dd><p>Path to the YAML configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.config">
+<span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#datapool.catalog.DataCatalog.config" title="Link to this definition"></a></dt>
+<dd><p>Parsed YAML configuration content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.datasets">
+<span class="sig-name descname"><span class="pre">datasets</span></span><a class="headerlink" href="#datapool.catalog.DataCatalog.datasets" title="Link to this definition"></a></dt>
+<dd><p>DataFrame listing all datasets, versions, and subdatasets with their metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.available_resolutions">
+<span class="sig-name descname"><span class="pre">available_resolutions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.available_resolutions" title="Link to this definition"></a></dt>
+<dd><p>Show available resolutions for a given dataset/version/subdataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Version of the dataset.</p></li>
+<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of available resolutions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.available_subdatasets">
+<span class="sig-name descname"><span class="pre">available_subdatasets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.available_subdatasets" title="Link to this definition"></a></dt>
+<dd><p>Show available subdatasets for a given dataset and version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – Version of the dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of available subdataset names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.available_versions">
+<span class="sig-name descname"><span class="pre">available_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.available_versions" title="Link to this definition"></a></dt>
+<dd><p>Show available versions for a given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of available version names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.help">
+<span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.help" title="Link to this definition"></a></dt>
+<dd><p>Describe available datasets and their supported options without loading data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset name to describe.</p></li>
+<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset version to describe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Prints information about datasets, versions, subdatasets, and capabilities.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.load_dataset">
+<span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.load_dataset" title="Link to this definition"></a></dt>
+<dd><p>Load any dataset by name/version/subdataset with optional directory filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset to load.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – Version of the dataset to load.</p></li>
+<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset to load (if applicable).</p></li>
+<li><p><strong>ignore_dirs</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of directory name substrings to ignore when loading files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded dataset in appropriate format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame, gpd.GeoDataFrame, or xr.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – If no matching dataset entry is found.</p></li>
+<li><p><strong>ValueError</strong> – If multiple entries match the criteria.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="datapool.catalog.DataCatalog.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.search" title="Link to this definition"></a></dt>
+<dd><p>Search datasets by keyword in dataset name, display name, or tags.
+Accepts either a single string or a list of keywords.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keyword</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – Keyword(s) to search for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of datasets matching any of the keywords.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-datapool.loaders">
+<span id="datapool-loaders-module"></span><h2>datapool.loaders module<a class="headerlink" href="#module-datapool.loaders" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="datapool.loaders.default">
+<span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.default" title="Link to this definition"></a></dt>
+<dd><p>Default loader function to load data based on file extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<em>object</em>) – The class instance.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – A dictionary containing dataset metadata including file path, extension,
+and loading parameters.</p></li>
+<li><p><strong>resolution</strong> (<em>str</em><em>, </em><em>optional</em>) – The resolution to filter files by. Required if the dataset defines
+multiple resolutions. Default is None.</p></li>
+<li><p><strong>static</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag indicating whether to load static files (True).
+Default is True. The default loader only supports static files.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to the underlying loading functions
+(e.g., pd.read_csv, gpd.read_file, rxr.open_rasterio, xr.open_mfdataset).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded data in the appropriate format based on file extension:
+- ‘csv’: pandas.DataFrame
+- ‘gpkg’ or ‘shp’: geopandas.GeoDataFrame
+- ‘tif’: xarray.Dataset
+- ‘nc’: xarray.Dataset</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame or gpd.GeoDataFrame or xr.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If no files matching the criteria are found.</p></li>
+<li><p><strong>ValueError</strong> – If the file extension is not supported.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datapool.loaders.measures_velocity">
+<span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">measures_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.measures_velocity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="datapool.loaders.racmo">
+<span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">racmo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.racmo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-datapool">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-datapool" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, ACCESS-NRI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

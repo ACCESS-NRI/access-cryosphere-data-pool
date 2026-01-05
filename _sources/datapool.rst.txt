@@ -1,0 +1,29 @@
+datapool package
+================
+
+Submodules
+----------
+
+datapool.catalog module
+-----------------------
+
+.. automodule:: datapool.catalog
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+datapool.loaders module
+-----------------------
+
+.. automodule:: datapool.loaders
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: datapool
+   :members:
+   :show-inheritance:
+   :undoc-members:
