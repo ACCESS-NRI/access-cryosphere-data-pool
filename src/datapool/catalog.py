@@ -18,16 +18,45 @@ class DataCatalog:
     
     Attributes
     ----------
-    config_file : str or Path
+    config_file : :class:`pathlib.Path` or :class:`str`
         Path to the YAML configuration file.
     config : dict
         Parsed YAML configuration content.
-    datasets : pd.DataFrame
+    datasets : :class:`pandas.DataFrame`
         DataFrame listing all datasets, versions, and subdatasets with their metadata.
+    
+    Examples
+    --------
+    >>> catalog = DataCatalog()
+    >>> catalog.help()
+    >>> data = catalog.load_dataset('dataset_name', version='v1')
     """
 
     # Initialize DataPool with key fields
     def __init__(self, yaml_path = None):
+        """
+        Initialize a DataCatalog.
+
+        This constructor initializes a DataCatalog from a given YAML file. By default, the 
+        packaged ``config/datasets.yaml`` file is used.
+
+        Parameters
+        ----------
+        yaml_path : :class:`pathlib.Path` or :class:`str`, optional
+            Path to the YAML configuration file. If not provided, the default packaged 
+            configuration file is used. Default is ``None``.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the provided ``yaml_path`` does not exist.
+
+        Notes
+        -----
+        The YAML file should contain a ``datasets`` key with dataset configurations.
+        """
+
+        # If yaml_path is not specified, use to default ../config/datasets.yaml
         if yaml_path is None:
             with resources.as_file(
                 resources.files("datapool").joinpath("config/datasets.yaml")
@@ -48,11 +77,11 @@ class DataCatalog:
     # Load YAML configuration
     def _load_yaml(self, path):
         """
-        Load a YAML file and return the parsed dict.
+        Load a YAML file and return the parsed dictionary.
 
         Parameters
         ----------
-        path : str or Path
+        path : :class:`pathlib.Path` or :class:`str`
             Path to the YAML file.
         
         Returns
@@ -60,6 +89,7 @@ class DataCatalog:
         dict
             Parsed YAML content as a dictionary.
         """
+
         with open(path, "r") as f:
             return yaml.safe_load(f)
 
@@ -69,8 +99,9 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset_path : str or Path
+        dataset_path : :class:`pathlib.Path` or :class:`str`
             Path to the dataset directory.
+
         Returns
         -------
         list of str
@@ -86,19 +117,19 @@ class DataCatalog:
             if p.is_dir()
         ])
 
-    def _resolve_metadata(self, meta, subds_meta, version, key, default = None):
+    def _resolve_metadata(self, meta, subds_meta, version, key, default=None):
         """
         Resolve a metadata value for a dataset, supporting dataset-level and
         subdataset-level overrides, including optional per-version dictionaries.
 
-        Resolution priority (highest → lowest):
+        Resolution priority (highest to lowest):
 
-            1. Subdataset-level value (``subds_meta[key]``)
-            2. Dataset-level value (``meta[key]``)
-            3. ``default``
+        1. Subdataset-level value (``subds_meta[key]``)
+        2. Dataset-level value (``meta[key]``)
+        3. ``default``
 
         If a metadata value is a dictionary and contains a version key
-        (e.g. ``{"v1": ..., "v2": ...}``), the value corresponding to the
+        (e.g., ``{"v1": ..., "v2": ...}``), the value corresponding to the
         requested version is returned.
 
         Parameters
@@ -108,10 +139,10 @@ class DataCatalog:
         subds_meta : dict
             Subdataset-level metadata dictionary parsed from the YAML configuration.
         version : str
-            Dataset version identifier (e.g. ``"v1"``, ``"v2"``). Used to resolve
+            Dataset version identifier (e.g., ``"v1"``, ``"v2"``). Used to resolve
             version-specific metadata entries when values are dictionaries.
         key : str
-            Metadata key to resolve (e.g. ``"resolutions"``,
+            Metadata key to resolve (e.g., ``"resolutions"``,
             ``"static_patterns"``, ``"extension"``).
         default : Any, optional
             Value returned if the key is not found at either dataset or
@@ -120,17 +151,16 @@ class DataCatalog:
 
         Returns
         -------
-        resolved : Any
-            The resolved metadata value. This may be a scalar (e.g. ``str``),
+        Any
+            The resolved metadata value. This may be a scalar (e.g., :class:`str`),
             a dictionary, or ``None`` if not found and no default is provided.
 
         Notes
         -----
-        - Subdataset-level metadata always takes precedence over dataset-level
-        metadata.
-        - Dictionary-valued metadata may optionally be keyed by version.
-        - Designed to support flexible YAML layouts where metadata may be
-        specified at different hierarchy levels.
+        Subdataset-level metadata always takes precedence over dataset-level
+        metadata. Dictionary-valued metadata may optionally be keyed by version.
+        This method is designed to support flexible YAML layouts where metadata
+        may be specified at different hierarchy levels.
         """
 
         # Ensure subds_meta is a dict
@@ -164,6 +194,16 @@ class DataCatalog:
         """
         Ensure the value is a list. If it's a scalar, wrap it in a list.
         If it's None, return an empty list.
+
+        Parameters
+        ----------
+        value : Any
+            Input value to normalise.
+
+        Returns
+        -------
+        list
+            A list containing the input value, or an empty list if input is None.
         """
 
         if value is None:
@@ -175,17 +215,23 @@ class DataCatalog:
 
     def _list_datasets(self):
         """
-        Return a flattened DataFrame listing datasets, versions, subdatasets.
+        Return a flattened DataFrame listing datasets, versions, and subdatasets.
         
+        This method constructs a DataFrame from the YAML configuration by iterating
+        over all datasets and their versions, extracting metadata and constructing
+        full file paths for each dataset/version combination.
+
         Parameters
         ----------
         None
 
         Returns
         -------
-        pd.DataFrame
-            DataFrame with columns: dataset, display_name, tags, version, subdataset,
-            path, full_path, extension, skip_lines, no_data_value.
+        :class:`pandas.DataFrame`
+            DataFrame with columns: ``dataset``, ``display_name``, ``description``,
+            ``tags``, ``version``, ``subdataset``, ``path``, ``full_path``,
+            ``extension``, ``skip_lines``, ``no_data_value``, ``ignore_dirs``,
+            ``ignore_files``, ``loader``, ``resolutions``, ``static_patterns``.
         """
 
         # Initialize list to hold dataset records
@@ -315,20 +361,22 @@ class DataCatalog:
     def _recursive_find_files(self, root, extension, ignore_dirs = None, ignore_files = None):
         """
         Recursively find files with given extension under root directory,
-        excluding any whose path contains one of the ignore_dirs substrings.
+        excluding any whose path contains one of the ignore_dirs or ignore_files substrings.
 
         Parameters
         ----------
-        root : str or Path
+        root : :class:`pathlib.Path` or class:`str`
             Root directory to search.
-        extension : str
-            File extension to search for (e.g., 'csv', 'tif').
-        ignore_dirs : list of str, optional
-            List of directory name substrings to ignore.
+        extension : :class:`str`
+            File extension to search for (e.g., ``'csv'``, ``'tif'``).
+        ignore_dirs : :class:`list` of :class:`str`, optional
+            List of directory name substrings to ignore. Default is ``None``.
+        ignore_files : :class:`list` of :class:`str`, optional
+            List of file name substrings to ignore. Default is ``None``.
         
         Returns
         -------
-        list of Path
+        :class:`list` of :class:`pathlib.Path`
             Sorted list of matching file paths.
         """
         
@@ -370,6 +418,21 @@ class DataCatalog:
     def _get_loader(self, name):
         """
         Retrieve a loader function by name from the loaders module.
+
+        Parameters
+        ----------
+        name : :class:`str` or None
+            Name of the loader function to retrieve from the loaders module. If ``None`, returns ``None``.
+
+        Returns
+        -------
+        callable or None
+            The loader function if found, otherwise ``None`` if name is ``None``.
+
+        Raises
+        ------
+        ValueError
+            If the loader function does not exist in the loaders module or is not callable.
         """
 
         if name is None:
@@ -386,6 +449,28 @@ class DataCatalog:
         return loader
 
     def _extract_row_params(self, row):
+        """
+        Extract common parameters from a dataset row.
+
+        Parameters
+        ----------
+        row : pandas.Series or dict
+            Row containing dataset metadata and configuration.
+
+        Returns
+        -------
+        tuple
+            Tuple containing:
+                path (Path): Full path to the dataset or subdataset.
+                ext (str): File extension (without leading dot).
+                skip_lines (int): Number of lines to skip when reading files.
+                no_data (Any): Value representing missing data.
+                ignore_dirs (list or None): List of directory substrings to ignore, or None.
+                ignore_files (list or None): List of file substrings to ignore, or None.
+                loader (str): Name of the loader function.
+                resolutions (Any): Resolution metadata, if available.
+                static_patterns (list): List of static file patterns, if available.
+        """
     
         # Extract common parameters from row
         path = Path(row["full_path"])
@@ -403,6 +488,23 @@ class DataCatalog:
     def _load_dataset_row(self, row, **kwargs):
         """
         Load all files for a dataset row, with optional directory filtering.
+
+        Parameters
+        ----------
+        row : pandas.Series
+            A row from the datasets DataFrame containing dataset metadata and configuration.
+        **kwargs
+            Additional keyword arguments to pass to the loader function.
+
+        Returns
+        -------
+        pd.DataFrame, gpd.GeoDataFrame, or xr.Dataset
+            Loaded dataset in the appropriate format determined by the loader function.
+
+        Raises
+        ------
+        ValueError
+            If no loader function is specified for the dataset.
         """
 
         loader = getattr(row, "loader", "default")
@@ -419,26 +521,49 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset : str
+        dataset : :class:`str`
             Name of the dataset to load.
-        version : str
-            Version of the dataset to load.
-        subdataset : str, optional
-            Name of the subdataset to load (if applicable).
-        ignore_dirs : list of str, optional
-            List of directory name substrings to ignore when loading files.
+        version : :class:`str`, optional
+            Version of the dataset to load. If not provided, the latest version is used.
+            Default is ``None``.
+        subdataset : :class:`str`, optional
+            Name of the subdataset to load (if applicable). Default is ``None``.
+        **kwargs
+            Additional keyword arguments to pass to the loader function. Common options include:
+            
+            - ``resolution`` : :class:`str`, optional
+                Resolution to load (if supported by the dataset).
+            - ``static`` : :class:`bool`, optional
+                Whether to load static files (if supported by the dataset).
         
         Returns
         -------
-        pd.DataFrame, gpd.GeoDataFrame, or xr.Dataset
-            Loaded dataset in appropriate format.
+        :class:`pandas.DataFrame`, :class:`geopandas.GeoDataFrame`, or :class:`xarray.Dataset`
+            Loaded dataset in the appropriate format determined by the loader function.
         
         Raises
         ------
         KeyError
             If no matching dataset entry is found.
+        TypeError
+            If ``subdataset`` is specified for a dataset that does not define subdatasets.
         ValueError
-            If multiple entries match the criteria.
+            If multiple entries match the criteria or if multiple subdatasets exist 
+            and none is specified.
+
+        Examples
+        --------
+        Load the latest version of a dataset:
+        
+        >>> data = catalog.load_dataset('dataset_name')
+        
+        Load a specific version:
+        
+        >>> data = catalog.load_dataset('dataset_name', version='v1')
+        
+        Load a specific subdataset:
+        
+        >>> data = catalog.load_dataset('dataset_name', version='v1', subdataset='sub1')
         """
 
         # Get dataset Dataframe
@@ -503,17 +628,29 @@ class DataCatalog:
     def search(self, keyword):
         """
         Search datasets by keyword in dataset name, display name, or tags.
-        Accepts either a single string or a list of keywords.
+
+        Accepts either a single string or a list of keywords and returns a DataFrame
+        of datasets matching any of the provided keywords.
 
         Parameters
         ----------
-        keyword : str or list of str
-            Keyword(s) to search for.
-        
+        keyword : :class:`str` or :class:`list` of :class:`str`
+            Keyword(s) to search for in dataset name, display name, or tags.
+
         Returns
         -------
-        pd.DataFrame
+        :class:`pandas.DataFrame`
             DataFrame of datasets matching any of the keywords.
+
+        Examples
+        --------
+        Search for a single keyword:
+
+        >>> results = catalog.search('temperature')
+
+        Search for multiple keywords:
+
+        >>> results = catalog.search(['temperature', 'precipitation'])
         """
         
         # Ensure keywords is a list
@@ -542,12 +679,12 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset : str
+        dataset : :class:`str`
             Name of the dataset.
         
         Returns
         -------
-        list of str
+        :class:`list` of :class:`str`
             List of available version names.
         """
 
@@ -568,13 +705,18 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset : str
+        dataset : :class:`str`
             Name of the dataset.
         
         Returns
         -------
-        str
+        :class:`str`
             Latest version name.
+        
+        Raises
+        ------
+        ValueError
+            If no versions are found for the dataset.
         """
 
         # Get available versions
@@ -593,15 +735,27 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset : str
+        dataset : :class:`str`
             Name of the dataset.
-        version : str
-            Version of the dataset.
+        version : :class:`str`, optional
+            Version of the dataset. If not provided, the latest version is used.
+            Default is ``None``.
         
         Returns
         -------
-        list of str
-            List of available subdataset names.
+        :class:`list` of :class:`str`
+            List of available subdataset names, or ``None`` if no subdatasets
+            are defined for the dataset.
+        
+        Raises
+        ------
+        ValueError
+            If no versions are found for the dataset.
+        
+        Warnings
+        --------
+        UserWarning
+            If no subdatasets are defined for the specified dataset and version.
         """
         
         # Get dataset Dataframe
@@ -630,17 +784,28 @@ class DataCatalog:
 
         Parameters
         ----------
-        dataset : str
+        dataset : :class:`str`
             Name of the dataset.
-        version : str, optional
-            Version of the dataset.
-        subdataset : str, optional
-            Name of the subdataset.
+        version : :class:`str`, optional
+            Version of the dataset. If not provided, the latest version is used.
+            Default is ``None``.
+        subdataset : :class:`str`, optional
+            Name of the subdataset. Default is ``None``.
         
         Returns
         -------
-        list of str
-            List of available resolutions.
+        :class:`list` of :class:`str`
+            List of available resolutions, or ``None`` if no resolutions are defined.
+        
+        Raises
+        ------
+        KeyError
+            If no matching dataset entry is found.
+        
+        Warnings
+        --------
+        UserWarning
+            If no resolutions are defined for the specified dataset/version/subdataset.
         """
 
         # Get dataset Dataframe
@@ -678,7 +843,31 @@ class DataCatalog:
     def _check_keywords(self, row, kwargs):
         """
         Check if all provided keywords match the dataset row.
-        Used for filtering datasets based on arbitrary metadata.
+        
+        Validates that keywords passed to dataset loading operations are supported
+        by the specified dataset. Raises appropriate errors if unsupported keywords
+        are used (e.g., requesting a resolution for a dataset that doesn't define
+        resolutions).
+
+        Parameters
+        ----------
+        row : pandas.Series
+            A row from the datasets DataFrame containing dataset metadata.
+        kwargs : dict
+            Keyword arguments to validate against the dataset row metadata.
+            Recognized keywords: ``resolution``, ``static``, ``subdataset``.
+
+        Raises
+        ------
+        TypeError
+            If ``resolution`` is specified but the dataset does not define resolutions.
+        TypeError
+            If ``static`` is specified but the dataset does not define static patterns.
+        
+        Notes
+        -----
+        This method is designed to provide early validation of user-supplied keywords
+        before attempting to load data, preventing confusing errors downstream.
         """
 
         CATALOG_KEYWORDS = {
@@ -695,6 +884,7 @@ class DataCatalog:
                 raise TypeError(f"'resolution' is not applicable for dataset '{row.dataset}'."
                                 " This dataset does not define any resolution metadata.")
         
+        # Check static
         if "static" in used:
             if not row.static_patterns:
                 raise TypeError(f"'static' is not applicable for dataset '{row.dataset}'."
@@ -704,18 +894,52 @@ class DataCatalog:
         """
         Describe available datasets and their supported options without loading data.
 
+        This method provides information about available datasets, versions, subdatasets,
+        and supported loading options. When called without arguments, it lists all available
+        datasets. When a dataset is specified, it lists available versions. When both
+        dataset and version are specified, it provides detailed information about the
+        dataset/version combination including available subdatasets and supported keywords.
+
         Parameters
         ----------
-        dataset : str, optional
-            Dataset name to describe.
-
-        version : str, optional
-            Dataset version to describe.
+        dataset : :class:`str`, optional
+            Name of the dataset to describe. If not provided, lists all available datasets.
+            Default is ``None``.
+        version : :class:`str`, optional
+            Version of the dataset to describe. If not provided, lists available versions
+            for the specified dataset. Default is ``None``.
 
         Returns
         -------
         None
-            Prints information about datasets, versions, subdatasets, and capabilities.
+            This method prints information to stdout about datasets, versions, subdatasets,
+            and supported catalog keywords. No value is returned.
+
+        Raises
+        ------
+        KeyError
+            If the specified dataset does not exist.
+        KeyError
+            If the specified version does not exist for the given dataset.
+
+        Examples
+        --------
+        List all available datasets:
+
+        >>> catalog.help()
+
+        List versions for a specific dataset:
+
+        >>> catalog.help(dataset='dataset_name')
+
+        Show detailed information for a dataset version:
+
+        >>> catalog.help(dataset='dataset_name', version='v1')
+
+        Notes
+        -----
+        The method provides hints for further exploration and example usage based on the
+        available metadata for the dataset/version combination.
         """
 
         # Get dataset Dataframe
