@@ -66,14 +66,14 @@ suppress_warnings = ["autodoc.import_object", "autodoc", "docutils"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 
 html_theme_options = {
     "use_edit_page_button": True,
-    "github_url": "https://github.com/ACCESS-NRI/access-nri-intake-catalog",
+    "github_url": "https://github.com/ACCESS-NRI/access-cryosphere-data-pool",
     "logo": {
-        "image_light": "_static/accessnri_light.png",
-        "image_dark": "_static/accessnri_dark.png",
+        "image_light": "_static/ACCESS_Logo_2024_(RGB).png",
+        "image_dark": "_static/ACCESS_Logo_2024_Dark_Background_(RGB).png",
     },
 }
