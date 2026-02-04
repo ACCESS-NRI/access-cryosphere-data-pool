@@ -77,3 +77,10 @@ html_theme_options = {
         "image_dark": "_static/ACCESS_Logo_2024_Dark_Background_(RGB).png",
     },
 }
+
+html_context = {
+    "github_user": "ACCESS-NRI",
+    "github_repo": "access-cryosphere-data-pool",
+    "github_version": "main",
+    "doc_path": "./docs",
+}
