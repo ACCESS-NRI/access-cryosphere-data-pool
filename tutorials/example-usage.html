@@ -1,0 +1,1770 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryosphere Community Datapool (CCD) &mdash; access-cryosphere-data-pool v0.0.1dev5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cbb29cf4"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            access-cryosphere-data-pool
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../access-cryosphere-data-pool.html">access-cryosphere-data-pool API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">access-cryosphere-data-pool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cryosphere Community Datapool (CCD)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/example-usage.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cryosphere-community-datapool-ccd">
+<h1>Cryosphere Community Datapool (CCD)<a class="headerlink" href="#cryosphere-community-datapool-ccd" title="Link to this heading"></a></h1>
+<section id="v0-1-usage-examples">
+<h2>V0.1 Usage Examples<a class="headerlink" href="#v0-1-usage-examples" title="Link to this heading"></a></h2>
+<p>Author: Lawrence Bird</p>
+<p>Email: lawrence.bird&#64;anu.edu.au</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datapool</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">datapool</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dp</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initialise-and-interrogate-the-datatpool">
+<h2>1. Initialise and interrogate the datatpool<a class="headerlink" href="#initialise-and-interrogate-the-datatpool" title="Link to this heading"></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialise the datapool using the YAML file provided (or a user-modified equivalent)</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">DataCatalog</span><span class="p">(</span><span class="s1">&#39;/scratch/tm70/lb9857/access-cryosphere-data-pool/src/datapool/config/datasets.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all datasets within the catalog (returns a pandas dataframe of all metadata)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">datasets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>display_name</th>
+      <th>description</th>
+      <th>tags</th>
+      <th>version</th>
+      <th>subdataset</th>
+      <th>path</th>
+      <th>full_path</th>
+      <th>extension</th>
+      <th>skip_lines</th>
+      <th>no_data_value</th>
+      <th>ignore_dirs</th>
+      <th>ignore_files</th>
+      <th>loader</th>
+      <th>resolutions</th>
+      <th>static_patterns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>measures_bedmachine_antarctica</td>
+      <td>BedMachine Antarctica</td>
+      <td>High-resolution bed topography and ice thickne...</td>
+      <td>[antarctica, bed topography, ice thickness, su...</td>
+      <td>v1</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>default</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>measures_bedmachine_antarctica</td>
+      <td>BedMachine Antarctica</td>
+      <td>High-resolution bed topography and ice thickne...</td>
+      <td>[antarctica, bed topography, ice thickness, su...</td>
+      <td>v2</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>default</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>measures_bedmachine_antarctica</td>
+      <td>BedMachine Antarctica</td>
+      <td>High-resolution bed topography and ice thickne...</td>
+      <td>[antarctica, bed topography, ice thickness, su...</td>
+      <td>v3</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>default</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>bedmap</td>
+      <td>Bedmap</td>
+      <td>Gridded, geospatial, and point datasets of Ant...</td>
+      <td>[antarctica, bed topography, ice thickness, su...</td>
+      <td>v1</td>
+      <td>geospatial</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>gpkg</td>
+      <td>0</td>
+      <td>-9999.0</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>default</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>bedmap</td>
+      <td>Bedmap</td>
+      <td>Gridded, geospatial, and point datasets of Ant...</td>
+      <td>[antarctica, bed topography, ice thickness, su...</td>
+      <td>v1</td>
+      <td>points</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/e...</td>
+      <td>csv</td>
+      <td>18</td>
+      <td>-9999.0</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>default</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>measures_its_live_regional_glacier_and_ice_she...</td>
+      <td>ITS_LIVE Regional Glacier and Ice Sheet Surfac...</td>
+      <td>ITS_LIVE regional glacier and ice sheet surfac...</td>
+      <td>[antarctica, greenland, ice velocity]</td>
+      <td>v2</td>
+      <td>RGI17A</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>measures_velocity</td>
+      <td>None</td>
+      <td>[_2014-2022_]</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>measures_its_live_regional_glacier_and_ice_she...</td>
+      <td>ITS_LIVE Regional Glacier and Ice Sheet Surfac...</td>
+      <td>ITS_LIVE regional glacier and ice sheet surfac...</td>
+      <td>[antarctica, greenland, ice velocity]</td>
+      <td>v2</td>
+      <td>RGI18A</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>measures_velocity</td>
+      <td>None</td>
+      <td>[_2014-2022_]</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>measures_its_live_regional_glacier_and_ice_she...</td>
+      <td>ITS_LIVE Regional Glacier and Ice Sheet Surfac...</td>
+      <td>ITS_LIVE regional glacier and ice sheet surfac...</td>
+      <td>[antarctica, greenland, ice velocity]</td>
+      <td>v2</td>
+      <td>RGI19A</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/i...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[]</td>
+      <td>measures_velocity</td>
+      <td>None</td>
+      <td>[_2014-2022_]</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>racmo2.3p2_monthly_27km_1979-2022</td>
+      <td>RACMO2.3p2 Monthly Surface Mass Balance and Cl...</td>
+      <td>Regional Atmospheric Climate Model (RACMO) ver...</td>
+      <td>[antarctica, surface mass balance, climate dat...</td>
+      <td>v1</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[Height_latlon_ANT27.nc, TotIS_RACMO_ANT27_IMB...</td>
+      <td>racmo</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>racmo2.4p1_monthly_11km_1979-2023</td>
+      <td>RACMO2.4p1 Monthly Surface Mass Balance and Cl...</td>
+      <td>Regional Atmospheric Climate Model (RACMO) ver...</td>
+      <td>[antarctica, surface mass balance, climate dat...</td>
+      <td>v1</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[ANT11_masks.nc]</td>
+      <td>racmo</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+  </tbody>
+</table>
+<p>65 rows × 16 columns</p>
+</div></div></div>
+</div>
+<p>Various functions exist to allow users to interrogate the data catalog:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">search()</span></code> - Search the data pool for a given key word. This searches the <code class="docutils literal notranslate"><span class="pre">dataset</span></code>, <code class="docutils literal notranslate"><span class="pre">display_name</span></code>, and <code class="docutils literal notranslate"><span class="pre">tags</span></code> fields.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">help()</span></code> - Retrieve a summary of dataset-specific information for a given dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">available_versions()</span></code> - Retrieve a list of available versions for a given dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">available_subdatasets()</span></code> - Retrieve a list of available subdataets for a given dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">available_resolutions()</span></code> - Retrieve a list of available resolutions for a given dataset.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Search the catalog based on display_name, tags, or dataset_name. Here, explore bedmachine datasets</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;racmo&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>display_name</th>
+      <th>description</th>
+      <th>tags</th>
+      <th>version</th>
+      <th>subdataset</th>
+      <th>path</th>
+      <th>full_path</th>
+      <th>extension</th>
+      <th>skip_lines</th>
+      <th>no_data_value</th>
+      <th>ignore_dirs</th>
+      <th>ignore_files</th>
+      <th>loader</th>
+      <th>resolutions</th>
+      <th>static_patterns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>63</th>
+      <td>racmo2.3p2_monthly_27km_1979-2022</td>
+      <td>RACMO2.3p2 Monthly Surface Mass Balance and Cl...</td>
+      <td>Regional Atmospheric Climate Model (RACMO) ver...</td>
+      <td>[antarctica, surface mass balance, climate dat...</td>
+      <td>v1</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[Height_latlon_ANT27.nc, TotIS_RACMO_ANT27_IMB...</td>
+      <td>racmo</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>racmo2.4p1_monthly_11km_1979-2023</td>
+      <td>RACMO2.4p1 Monthly Surface Mass Balance and Cl...</td>
+      <td>Regional Atmospheric Climate Model (RACMO) ver...</td>
+      <td>[antarctica, surface mass balance, climate dat...</td>
+      <td>v1</td>
+      <td>None</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>/g/data/av17/access-nri/cryosphere-data-pool/s...</td>
+      <td>nc</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>[]</td>
+      <td>[ANT11_masks.nc]</td>
+      <td>racmo</td>
+      <td>None</td>
+      <td>[]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The help() function provides a full overview of a given dataset</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">(</span><span class="s1">&#39;measures_its_live_regional_glacier_and_ice_sheet_surface_velocities&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset: measures_its_live_regional_glacier_and_ice_sheet_surface_velocities
+
+Available versions:
+  - v1
+  - v2
+
+Tip:
+  Use catalog.help(dataset=..., version=...) for more details.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Version-specific information about a given dataset can be obtained by specifying a given version</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">(</span><span class="s1">&#39;measures_its_live_regional_glacier_and_ice_sheet_surface_velocities&#39;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset: measures_its_live_regional_glacier_and_ice_sheet_surface_velocities
+
+Available versions:
+  - v1
+  - v2
+
+Version: v1
+
+Available subdatasets:
+  - ALA
+  - ANT
+  - CAN
+  - GRE
+  - HMA
+  - ICE
+  - PAT
+  - SRA
+
+Supported catalog keywords:
+  - subdataset : yes
+  - resolution : yes
+  - static  : yes
+
+Example usage:
+  catalog.load_dataset(&#39;measures_its_live_regional_glacier_and_ice_sheet_surface_velocities&#39;, version = &#39;v1&#39;, subdataset = &#39;...&#39;, resolution = &#39;...&#39;, static = True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find versions of a given dataset</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">available_versions</span><span class="p">(</span><span class="s1">&#39;racmo2.3p2_monthly_27km_1979-2022&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;v1&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find available subdatasets for bedmap. By default, the latest version is used.</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">available_subdatasets</span><span class="p">(</span><span class="s1">&#39;bedmap&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;geospatial&#39;, &#39;points&#39;, &#39;gridded&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get available resolutions for a gievn dataset/version/subdataset. If not specified, the latest version is used.</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">available_resolutions</span><span class="p">(</span><span class="s1">&#39;measures_its_live_regional_glacier_and_ice_sheet_surface_velocities&#39;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">subdataset</span> <span class="o">=</span> <span class="s1">&#39;ALA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;annual&#39;: {&#39;120m&#39;: &#39;G0120&#39;, &#39;240m&#39;: &#39;G0240&#39;},
+ &#39;static&#39;: {&#39;120m&#39;: &#39;G0120&#39;, &#39;240m&#39;: &#39;G0240&#39;}}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-datasets">
+<h2>Loading Datasets<a class="headerlink" href="#loading-datasets" title="Link to this heading"></a></h2>
+<p>To load a dataset, we use the <code class="docutils literal notranslate"><span class="pre">load_dataset</span></code> function. This accepts various keyword arguments, depending on the dataset. At a minimum it requires <code class="docutils literal notranslate"><span class="pre">dataset_name</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code> arguments.</p>
+<p>Other arguments include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">subdataset</span></code> [str]- this is the name of the subdataset to be loaded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resolution</span></code> [str] - this is the requested resolution to be loaded. Currently only supported for <code class="docutils literal notranslate"><span class="pre">measures_its_live_regional_glacier_and_ice_sheet_surface_velocities</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">composite</span></code> [bool] - should the composite file be loaded, or the annual series. Default = False</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a simple dataset</span>
+<span class="n">bedmachine_v1</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;measures_bedmachine_antarctica&#39;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+<span class="n">bedmachine_v1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/g/data/xp65/public/apps/med_conda/envs/analysis3-25.12/lib/python3.11/site-packages/distributed/diagnostics/nvml.py:14: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml
+</pre></div>
+</div>
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in notebooks */
+
+:root {
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base rgba(0, 0, 0, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, white)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 15))
+  );
+}
+
+html[theme="dark"],
+html[data-theme="dark"],
+body[data-theme="dark"],
+body.vscode-dark {
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base, rgba(255, 255, 255, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, #111111)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 15))
+  );
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-obj-name,
+.xr-group-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-group-name::before {
+  content: "📁";
+  padding-right: 0.3em;
+}
+
+.xr-group-name,
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+  border: 2px solid transparent !important;
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0) !important;
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: "►";
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: "▼";
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-group-box {
+  display: inline-grid;
+  grid-template-columns: 0px 20px auto;
+  width: 100%;
+}
+
+.xr-group-box-vline {
+  grid-column-start: 1;
+  border-right: 0.2em solid;
+  border-color: var(--xr-border-color);
+  width: 0px;
+}
+
+.xr-group-box-hline {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  height: 1em;
+  width: 20px;
+  border-bottom: 0.2em solid;
+  border-color: var(--xr-border-color);
+}
+
+.xr-group-box-contents {
+  grid-column-start: 3;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: "(";
+}
+
+.xr-dim-list:after {
+  content: ")";
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ",";
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  border-color: var(--xr-background-color-row-odd);
+  margin-bottom: 0;
+  padding-top: 2px;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+  border-color: var(--xr-background-color-row-even);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  border-top: 2px dotted var(--xr-background-color);
+  padding-bottom: 20px !important;
+  padding-top: 10px !important;
+}
+
+.xr-var-attrs-in + label,
+.xr-var-data-in + label,
+.xr-index-data-in + label {
+  padding: 0 1px;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-data > pre,
+.xr-index-data > pre,
+.xr-var-data > table > tbody > tr {
+  background-color: transparent !important;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.xr-var-attrs-in:checked + label > .xr-icon-file-text2,
+.xr-var-data-in:checked + label > .xr-icon-database,
+.xr-index-data-in:checked + label > .xr-icon-database {
+  color: var(--xr-font-color0);
+  filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
+  stroke-width: 0.8px;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 4GB
+Dimensions:    (y: 13333, x: 13333)
+Coordinates:
+  * y          (y) int32 53kB 3333000 3332500 3332000 ... -3332500 -3333000
+  * x          (x) int32 53kB -3333000 -3332500 -3332000 ... 3332500 3333000
+Data variables:
+    mapping    |S1 1B ...
+    mask       (y, x) int8 178MB dask.array&lt;chunksize=(1905, 1905), meta=np.ndarray&gt;
+    firn       (y, x) float32 711MB dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;
+    surface    (y, x) float32 711MB dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;
+    thickness  (y, x) float32 711MB dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;
+    bed        (y, x) float32 711MB dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;
+    errbed     (y, x) float32 711MB dask.array&lt;chunksize=(1334, 1334), meta=np.ndarray&gt;
+    source     (y, x) int8 178MB dask.array&lt;chunksize=(1905, 1905), meta=np.ndarray&gt;
+    geoid      (y, x) int16 356MB dask.array&lt;chunksize=(1334, 1334), meta=np.ndarray&gt;
+Attributes: (12/17)
+    Conventions:                 CF-1.7
+    Title:                       BedMachine Antarctica
+    Author:                      Mathieu Morlighem
+    version:                     05-Nov-2019 (v1.38)
+    nx:                          13333.0
+    ny:                          13333.0
+    ...                          ...
+    ymax:                        3333000
+    spacing:                     500
+    no_data:                     -9999.0
+    license:                     No restrictions on access or use
+    Data_citation:               Morlighem M. et al., (2019), Deep glacial tr...
+    Notes:                       Data processed at the Department of Earth Sy...</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-e9f99f7d-d7cc-466d-9d30-8174d3af3ada' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-e9f99f7d-d7cc-466d-9d30-8174d3af3ada' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>y</span>: 13333</li><li><span class='xr-has-index'>x</span>: 13333</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-c22ba0a1-7d94-4ada-8ade-6775ae81ca02' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c22ba0a1-7d94-4ada-8ade-6775ae81ca02' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>3333000 3332500 ... -3333000</div><input id='attrs-d2f398dc-07e4-48a3-a2f6-a7dc4265d7a7' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-d2f398dc-07e4-48a3-a2f6-a7dc4265d7a7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-763f67ec-d36c-4d85-90c2-140c9328d570' class='xr-var-data-in' type='checkbox'><label for='data-763f67ec-d36c-4d85-90c2-140c9328d570' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Cartesian y-coordinate</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>meter</dd></dl></div><div class='xr-var-data'><pre>array([ 3333000,  3332500,  3332000, ..., -3332000, -3332500, -3333000],
+      dtype=int32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>-3333000 -3332500 ... 3333000</div><input id='attrs-389d6c4d-5866-430c-9aea-7d57bf495c8a' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-389d6c4d-5866-430c-9aea-7d57bf495c8a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-44bc47e4-a556-4b34-84a8-445c0fa9ec0b' class='xr-var-data-in' type='checkbox'><label for='data-44bc47e4-a556-4b34-84a8-445c0fa9ec0b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Cartesian x-coordinate</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>meter</dd></dl></div><div class='xr-var-data'><pre>array([-3333000, -3332500, -3332000, ...,  3332000,  3332500,  3333000],
+      dtype=int32)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ce590b73-7047-4e65-a3e8-e196680c5307' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ce590b73-7047-4e65-a3e8-e196680c5307' class='xr-section-summary' >Data variables: <span>(9)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>mapping</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>|S1</div><div class='xr-var-preview xr-preview'>...</div><input id='attrs-960bb3b3-a612-43b0-a49f-1ad945b6e507' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-960bb3b3-a612-43b0-a49f-1ad945b6e507' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-128008bd-55c1-4c6d-af64-8a8cb1e3c560' class='xr-var-data-in' type='checkbox'><label for='data-128008bd-55c1-4c6d-af64-8a8cb1e3c560' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>grid_mapping_name :</span></dt><dd>polar_stereographic</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>-90.0</dd><dt><span>standard_parallel :</span></dt><dd>-71.0</dd><dt><span>straight_vertical_longitude_from_pole :</span></dt><dd>0.0</dd><dt><span>semi_major_axis :</span></dt><dd>6378273.0</dd><dt><span>inverse_flattening :</span></dt><dd>298.2794050428205</dd><dt><span>false_easting :</span></dt><dd>0.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd></dl></div><div class='xr-var-data'><pre>[1 values with dtype=|S1]</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>mask</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>int8</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1905, 1905), meta=np.ndarray&gt;</div><input id='attrs-0b8fc52d-7dc6-4fb8-8e32-ec47a5703e22' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0b8fc52d-7dc6-4fb8-8e32-ec47a5703e22' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f88cf3d6-0a5c-44f1-8473-5a64f66e41d6' class='xr-var-data-in' type='checkbox'><label for='data-f88cf3d6-0a5c-44f1-8473-5a64f66e41d6' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>mask</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>valid_range :</span></dt><dd>[0 4]</dd><dt><span>flag_values :</span></dt><dd>[0 1 2 3 4]</dd><dt><span>flag_meanings :</span></dt><dd>ocean ice_free_land grounded_ice floating_ice lake_vostok</dd><dt><span>source :</span></dt><dd>Antarctic Digital Database (rock outcrop) and Jeremie Mouginot (pers. comm., grounding lines)</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 169.53 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (1905, 1905) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 49 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> int8 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>firn</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;</div><input id='attrs-0c775154-950f-4303-8504-ab99b53bb667' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-0c775154-950f-4303-8504-ab99b53bb667' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e01bed47-ef78-4a5a-af9c-79ef81dd3d45' class='xr-var-data-in' type='checkbox'><label for='data-e01bed47-ef78-4a5a-af9c-79ef81dd3d45' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>firn air content</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>source :</span></dt><dd>FAC model from Ligtenberg et al., 2011, forced by RACMO2.3p2 (van Wessem et al., 2018)</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 678.13 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (953, 953) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 196 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="8" x2="120" y2="8" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="25" x2="120" y2="25" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="42" x2="120" y2="42" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="77" x2="120" y2="77" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="94" x2="120" y2="94" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="111" x2="120" y2="111" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="8" y1="0" x2="8" y2="120" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="25" y1="0" x2="25" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="42" y1="0" x2="42" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="77" y1="0" x2="77" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="94" y1="0" x2="94" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="111" y1="0" x2="111" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>surface</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;</div><input id='attrs-28622207-a097-450c-8ce9-4dc83ef98c7f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-28622207-a097-450c-8ce9-4dc83ef98c7f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ecbc88e4-f2b1-4ae2-989e-4cc82eef8c9e' class='xr-var-data-in' type='checkbox'><label for='data-ecbc88e4-f2b1-4ae2-989e-4cc82eef8c9e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>ice surface elevation</dd><dt><span>standard_name :</span></dt><dd>surface_altitude</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>source :</span></dt><dd>REMA (Byrd Polar and Climate Research Center and the Polar Geospatial Center)</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 678.13 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (953, 953) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 196 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="8" x2="120" y2="8" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="25" x2="120" y2="25" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="42" x2="120" y2="42" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="77" x2="120" y2="77" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="94" x2="120" y2="94" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="111" x2="120" y2="111" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="8" y1="0" x2="8" y2="120" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="25" y1="0" x2="25" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="42" y1="0" x2="42" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="77" y1="0" x2="77" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="94" y1="0" x2="94" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="111" y1="0" x2="111" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>thickness</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;</div><input id='attrs-234347a7-2177-4714-8bf6-c0377d945862' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-234347a7-2177-4714-8bf6-c0377d945862' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7a222a76-3026-4159-b7b9-01bccfff1078' class='xr-var-data-in' type='checkbox'><label for='data-7a222a76-3026-4159-b7b9-01bccfff1078' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>ice thickness</dd><dt><span>standard_name :</span></dt><dd>land_ice_thickness</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>source :</span></dt><dd>Mathieu Morlighem</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 678.13 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (953, 953) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 196 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="8" x2="120" y2="8" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="25" x2="120" y2="25" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="42" x2="120" y2="42" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="77" x2="120" y2="77" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="94" x2="120" y2="94" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="111" x2="120" y2="111" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="8" y1="0" x2="8" y2="120" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="25" y1="0" x2="25" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="42" y1="0" x2="42" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="77" y1="0" x2="77" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="94" y1="0" x2="94" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="111" y1="0" x2="111" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>bed</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(953, 953), meta=np.ndarray&gt;</div><input id='attrs-803bb971-4380-474d-9f1a-97bfac30c1df' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-803bb971-4380-474d-9f1a-97bfac30c1df' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5987968c-8153-4128-9eb2-3a61a11aaedc' class='xr-var-data-in' type='checkbox'><label for='data-5987968c-8153-4128-9eb2-3a61a11aaedc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>bed topography</dd><dt><span>standard_name :</span></dt><dd>bedrock_altitude</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>source :</span></dt><dd>IBCSO and Mathieu Morlighem</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 678.13 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (953, 953) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 196 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="8" x2="120" y2="8" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="25" x2="120" y2="25" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="42" x2="120" y2="42" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="77" x2="120" y2="77" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="94" x2="120" y2="94" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="111" x2="120" y2="111" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="8" y1="0" x2="8" y2="120" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="25" y1="0" x2="25" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="42" y1="0" x2="42" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="77" y1="0" x2="77" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="94" y1="0" x2="94" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="111" y1="0" x2="111" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>errbed</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1334, 1334), meta=np.ndarray&gt;</div><input id='attrs-4f32d27d-ac99-444d-91fb-f71d346669b1' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4f32d27d-ac99-444d-91fb-f71d346669b1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-32a4c00e-d878-4a53-90d0-0f77fbdf79af' class='xr-var-data-in' type='checkbox'><label for='data-32a4c00e-d878-4a53-90d0-0f77fbdf79af' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>bed topography/ice thickness error</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>source :</span></dt><dd>Mathieu Morlighem</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 678.13 MiB </td>
+                        <td> 6.79 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (1334, 1334) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 100 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="12" x2="120" y2="12" />
+  <line x1="0" y1="24" x2="120" y2="24" />
+  <line x1="0" y1="36" x2="120" y2="36" />
+  <line x1="0" y1="48" x2="120" y2="48" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="72" x2="120" y2="72" />
+  <line x1="0" y1="84" x2="120" y2="84" />
+  <line x1="0" y1="96" x2="120" y2="96" />
+  <line x1="0" y1="108" x2="120" y2="108" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="12" y1="0" x2="12" y2="120" />
+  <line x1="24" y1="0" x2="24" y2="120" />
+  <line x1="36" y1="0" x2="36" y2="120" />
+  <line x1="48" y1="0" x2="48" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="72" y1="0" x2="72" y2="120" />
+  <line x1="84" y1="0" x2="84" y2="120" />
+  <line x1="96" y1="0" x2="96" y2="120" />
+  <line x1="108" y1="0" x2="108" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>source</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>int8</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1905, 1905), meta=np.ndarray&gt;</div><input id='attrs-ca21501a-5bc7-4c49-a82b-09c3272a32f3' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-ca21501a-5bc7-4c49-a82b-09c3272a32f3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4f4f3c64-a91a-451b-b117-15413a29f065' class='xr-var-data-in' type='checkbox'><label for='data-4f4f3c64-a91a-451b-b117-15413a29f065' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>data source</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>valid_range :</span></dt><dd>[ 1 10]</dd><dt><span>flag_values :</span></dt><dd>[ 1  2  3  4  5  6  7 10]</dd><dt><span>flag_meanings :</span></dt><dd>REMA_IBCSO mass_conservation interpolation hydrostatic streamline_diffusion gravity seismic multibeam</dd><dt><span>source :</span></dt><dd>Mathieu Morlighem</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 169.53 MiB </td>
+                        <td> 3.46 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (1905, 1905) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 49 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> int8 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="17" x2="120" y2="17" />
+  <line x1="0" y1="34" x2="120" y2="34" />
+  <line x1="0" y1="51" x2="120" y2="51" />
+  <line x1="0" y1="68" x2="120" y2="68" />
+  <line x1="0" y1="85" x2="120" y2="85" />
+  <line x1="0" y1="102" x2="120" y2="102" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="17" y1="0" x2="17" y2="120" />
+  <line x1="34" y1="0" x2="34" y2="120" />
+  <line x1="51" y1="0" x2="51" y2="120" />
+  <line x1="68" y1="0" x2="68" y2="120" />
+  <line x1="85" y1="0" x2="85" y2="120" />
+  <line x1="102" y1="0" x2="102" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>geoid</span></div><div class='xr-var-dims'>(y, x)</div><div class='xr-var-dtype'>int16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(1334, 1334), meta=np.ndarray&gt;</div><input id='attrs-5e4c532a-4603-4b8a-83aa-1d58e80f4bad' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5e4c532a-4603-4b8a-83aa-1d58e80f4bad' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f5351e09-3139-4a76-ae51-198ccb4afa35' class='xr-var-data-in' type='checkbox'><label for='data-f5351e09-3139-4a76-ae51-198ccb4afa35' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>EIGEN-EC4 Geoid - WGS84 Ellipsoid difference</dd><dt><span>standard_name :</span></dt><dd>geoid_height_above_reference_ellipsoid</dd><dt><span>units :</span></dt><dd>meters</dd><dt><span>grid_mapping :</span></dt><dd>mapping</dd><dt><span>geoid :</span></dt><dd>eigen-6c4 (Forste et al 2014)</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 339.07 MiB </td>
+                        <td> 3.39 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (13333, 13333) </td>
+                        <td> (1334, 1334) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 100 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> int16 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="170" height="170" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="120" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="12" x2="120" y2="12" />
+  <line x1="0" y1="24" x2="120" y2="24" />
+  <line x1="0" y1="36" x2="120" y2="36" />
+  <line x1="0" y1="48" x2="120" y2="48" />
+  <line x1="0" y1="60" x2="120" y2="60" />
+  <line x1="0" y1="72" x2="120" y2="72" />
+  <line x1="0" y1="84" x2="120" y2="84" />
+  <line x1="0" y1="96" x2="120" y2="96" />
+  <line x1="0" y1="108" x2="120" y2="108" />
+  <line x1="0" y1="120" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="120" style="stroke-width:2" />
+  <line x1="12" y1="0" x2="12" y2="120" />
+  <line x1="24" y1="0" x2="24" y2="120" />
+  <line x1="36" y1="0" x2="36" y2="120" />
+  <line x1="48" y1="0" x2="48" y2="120" />
+  <line x1="60" y1="0" x2="60" y2="120" />
+  <line x1="72" y1="0" x2="72" y2="120" />
+  <line x1="84" y1="0" x2="84" y2="120" />
+  <line x1="96" y1="0" x2="96" y2="120" />
+  <line x1="108" y1="0" x2="108" y2="120" />
+  <line x1="120" y1="0" x2="120" y2="120" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 120.0,0.0 120.0,120.0 0.0,120.0" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="60.000000" y="140.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" >13333</text>
+  <text x="140.000000" y="60.000000" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(-90,140.000000,60.000000)">13333</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-cfc06c65-8feb-470b-b2b8-79674397ceb7' class='xr-section-summary-in' type='checkbox'  ><label for='section-cfc06c65-8feb-470b-b2b8-79674397ceb7' class='xr-section-summary' >Attributes: <span>(17)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.7</dd><dt><span>Title :</span></dt><dd>BedMachine Antarctica</dd><dt><span>Author :</span></dt><dd>Mathieu Morlighem</dd><dt><span>version :</span></dt><dd>05-Nov-2019 (v1.38)</dd><dt><span>nx :</span></dt><dd>13333.0</dd><dt><span>ny :</span></dt><dd>13333.0</dd><dt><span>Projection :</span></dt><dd>Polar Stereographic South (71S,0E)</dd><dt><span>proj4 :</span></dt><dd>+init=epsg:3031</dd><dt><span>sea_water_density (kg m-3) :</span></dt><dd>1027.0</dd><dt><span>ice_density (kg m-3) :</span></dt><dd>917.0</dd><dt><span>xmin :</span></dt><dd>-3333000</dd><dt><span>ymax :</span></dt><dd>3333000</dd><dt><span>spacing :</span></dt><dd>500</dd><dt><span>no_data :</span></dt><dd>-9999.0</dd><dt><span>license :</span></dt><dd>No restrictions on access or use</dd><dt><span>Data_citation :</span></dt><dd>Morlighem M. et al., (2019), Deep glacial troughs and stabilizing ridges unveiled beneath the margins of the Antarctic ice sheet, Nature Geoscience (accepted)</dd><dt><span>Notes :</span></dt><dd>Data processed at the Department of Earth System Science, University of California, Irvine</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a specific subdataset. The &#39;type&#39; returned depends on the dataset.</span>
+<span class="n">measures_basins_imbie</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;measures_antarctic_boundaries&#39;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v2&#39;</span><span class="p">,</span> <span class="n">subdataset</span> <span class="o">=</span> <span class="s1">&#39;basins_imbie&#39;</span><span class="p">)</span>
+<span class="n">measures_basins_imbie</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct a simple figure</span>
+
+<span class="c1"># Coarsen bed topogrpahy for improved render time</span>
+<span class="n">bed</span> <span class="o">=</span> <span class="n">bedmachine_v1</span><span class="o">.</span><span class="n">bed</span><span class="o">.</span><span class="n">coarsen</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">boundary</span> <span class="o">=</span> <span class="s1">&#39;trim&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># Plot bed topography</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">bed</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="c1"># Add grounding line</span>
+<span class="n">measures_basins_imbie</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load composite velocity data</span>
+<span class="n">vel_data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;measures_its_live_regional_glacier_and_ice_sheet_surface_velocities&#39;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">subdataset</span> <span class="o">=</span> <span class="s1">&#39;ANT&#39;</span><span class="p">,</span> <span class="n">resolution</span> <span class="o">=</span> <span class="s1">&#39;240m&#39;</span><span class="p">,</span> <span class="n">static</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">vel_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, ACCESS-NRI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

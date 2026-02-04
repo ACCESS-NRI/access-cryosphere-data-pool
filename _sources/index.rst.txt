@@ -10,8 +10,9 @@ Quick Links
 -------------------
 - `Overview <overview>`_ - A high-level introduction to access-cryosphere-data-pool features and capabilities.
 - `Installation <installation>`_ - Instructions for installing access-cryosphere-data-pool.
+- `Tutorials <tutorials>`_ - Hands-on tutorials demonstrating the use of access-cryosphere-data-pool
+- `API Reference <access-cryosphere-data-pool>`_ - Detailed API documentation for access-cryosphere-data-pool submodules and classes.
 - `Contributing Guidelines <contributing>`_ - How to contribute to access-cryosphere-data-pool development and documentation.
-- `Module Reference <modules>`_ - Detailed API documentation for access-cryosphere-data-pool submodules and classes.
 
 Getting Started
 -------------------
@@ -28,5 +29,5 @@ We welcome contributions from the community! If you're interested in contributin
 
    overview
    installation
-   modules
+   access-cryosphere-data-pool
    contributing
