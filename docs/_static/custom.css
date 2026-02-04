@@ -1,6 +1,0 @@
-/* Scroll wide pandas tables */
-table.dataframe {
-  display: block;
-  overflow-x: auto;
-  max-width: 100%;
-}

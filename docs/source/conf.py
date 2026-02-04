@@ -68,4 +68,12 @@ suppress_warnings = ["autodoc.import_object", "autodoc", "docutils"]
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_css_files = ["custom.css"]
+
+html_theme_options = {
+    "use_edit_page_button": True,
+    "github_url": "https://github.com/ACCESS-NRI/access-nri-intake-catalog",
+    "logo": {
+        "image_light": "_static/accessnri_light.png",
+        "image_dark": "_static/accessnri_dark.png",
+    },
+}
