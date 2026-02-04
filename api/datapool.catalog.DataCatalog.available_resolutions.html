@@ -101,18 +101,29 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p></li>
-<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Version of the dataset.</p></li>
-<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset. If not provided, the latest version is used.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>subdataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Name of the subdataset. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of available resolutions.</p>
+<dd class="field-even"><p>List of available resolutions, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no resolutions are defined.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list of str</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If no matching dataset entry is found.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<dl class="simple">
+<dt>UserWarning</dt><dd><p>If no resolutions are defined for the specified dataset/version/subdataset.</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 </section>

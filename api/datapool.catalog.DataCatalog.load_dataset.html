@@ -98,25 +98,54 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset to load.</p></li>
-<li><p><strong>version</strong> (<em>str</em>) – Version of the dataset to load.</p></li>
-<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset to load (if applicable).</p></li>
-<li><p><strong>ignore_dirs</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of directory name substrings to ignore when loading files.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to load.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset to load. If not provided, the latest version is used.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>subdataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Name of the subdataset to load (if applicable). Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments to pass to the loader function. Common options include:</p>
+<ul>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional</span></dt><dd><p>Resolution to load (if supported by the dataset).</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">static</span></code><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, optional</span></dt><dd><p>Whether to load static files (if supported by the dataset).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Loaded dataset in appropriate format.</p>
+<dd class="field-even"><p>Loaded dataset in the appropriate format determined by the loader function.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame, gpd.GeoDataFrame, or xr.Dataset</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>KeyError</strong> – If no matching dataset entry is found.</p></li>
-<li><p><strong>ValueError</strong> – If multiple entries match the criteria.</p></li>
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">subdataset</span></code> is specified for a dataset that does not define subdatasets.</p></li>
+<li><p><strong>ValueError</strong> – If multiple entries match the criteria or if multiple subdatasets exist
+    and none is specified.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Load the latest version of a dataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load a specific version:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load a specific subdataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">subdataset</span><span class="o">=</span><span class="s1">&#39;sub1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

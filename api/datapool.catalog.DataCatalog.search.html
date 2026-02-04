@@ -97,19 +97,29 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="datapool.catalog.DataCatalog.search">
 <span class="sig-prename descclassname"><span class="pre">DataCatalog.</span></span><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.search" title="Link to this definition"></a></dt>
-<dd><p>Search datasets by keyword in dataset name, display name, or tags.
-Accepts either a single string or a list of keywords.</p>
+<dd><p>Search datasets by keyword in dataset name, display name, or tags.</p>
+<p>Accepts either a single string or a list of keywords and returns a DataFrame
+of datasets matching any of the provided keywords.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>keyword</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – Keyword(s) to search for.</p>
+<dd class="field-odd"><p><strong>keyword</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Keyword(s) to search for in dataset name, display name, or tags.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of datasets matching any of the keywords.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Search for a single keyword:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Search for multiple keywords:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">([</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;precipitation&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

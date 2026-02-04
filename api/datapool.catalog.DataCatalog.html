@@ -103,7 +103,7 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dd><p>Path to the YAML configuration file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str or Path</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -125,21 +125,41 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dd><p>DataFrame listing all datasets, versions, and subdatasets with their metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">DataCatalog</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="datapool.catalog.DataCatalog.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.__init__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Initialize a DataCatalog.</p>
+<p>This constructor initializes a DataCatalog from a given YAML file. By default, the
+packaged <code class="docutils literal notranslate"><span class="pre">config/datasets.yaml</span></code> file is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>yaml_path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Path to the YAML configuration file. If not provided, the default packaged
+configuration file is used. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the provided <code class="docutils literal notranslate"><span class="pre">yaml_path</span></code> does not exist.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The YAML file should contain a <code class="docutils literal notranslate"><span class="pre">datasets</span></code> key with dataset configurations.</p>
+</dd></dl>
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#datapool.catalog.DataCatalog.__init__" title="datapool.catalog.DataCatalog.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([yaml_path])</p></td>
-<td><p></p></td>
+<td><p>Initialize a DataCatalog.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="datapool.catalog.DataCatalog.available_resolutions.html#datapool.catalog.DataCatalog.available_resolutions" title="datapool.catalog.DataCatalog.available_resolutions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">available_resolutions</span></code></a>(dataset[, version, ...])</p></td>
 <td><p>Show available resolutions for a given dataset/version/subdataset.</p></td>
@@ -168,18 +188,29 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p></li>
-<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Version of the dataset.</p></li>
-<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset. If not provided, the latest version is used.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>subdataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Name of the subdataset. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of available resolutions.</p>
+<dd class="field-even"><p>List of available resolutions, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no resolutions are defined.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list of str</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If no matching dataset entry is found.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<dl class="simple">
+<dt>UserWarning</dt><dd><p>If no resolutions are defined for the specified dataset/version/subdataset.</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -189,17 +220,29 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p></li>
-<li><p><strong>version</strong> (<em>str</em>) – Version of the dataset.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset. If not provided, the latest version is used.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of available subdataset names.</p>
+<dd class="field-even"><p>List of available subdataset names, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no subdatasets
+are defined for the dataset.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list of str</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no versions are found for the dataset.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<dl class="simple">
+<dt>UserWarning</dt><dd><p>If no subdatasets are defined for the specified dataset and version.</p>
+</dd>
+</dl>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -208,13 +251,13 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dd><p>Show available versions for a given dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset.</p>
+<dd class="field-odd"><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of available version names.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list of str</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -223,20 +266,50 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dt class="sig sig-object py" id="datapool.catalog.DataCatalog.help">
 <span class="sig-name descname"><span class="pre">help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.help" title="Link to this definition"></a></dt>
 <dd><p>Describe available datasets and their supported options without loading data.</p>
+<p>This method provides information about available datasets, versions, subdatasets,
+and supported loading options. When called without arguments, it lists all available
+datasets. When a dataset is specified, it lists available versions. When both
+dataset and version are specified, it provides detailed information about the
+dataset/version combination including available subdatasets and supported keywords.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset name to describe.</p></li>
-<li><p><strong>version</strong> (<em>str</em><em>, </em><em>optional</em>) – Dataset version to describe.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Name of the dataset to describe. If not provided, lists all available datasets.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset to describe. If not provided, lists available versions
+for the specified dataset. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Prints information about datasets, versions, subdatasets, and capabilities.</p>
+<dd class="field-even"><p>This method prints information to stdout about datasets, versions, subdatasets,
+and supported catalog keywords. No value is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>KeyError</strong> – If the specified dataset does not exist.</p></li>
+<li><p><strong>KeyError</strong> – If the specified version does not exist for the given dataset.</p></li>
+</ul>
+</dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>List all available datasets:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>List versions for a specific dataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Show detailed information for a dataset version:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>The method provides hints for further exploration and example usage based on the
+available metadata for the dataset/version combination.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -246,43 +319,82 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>str</em>) – Name of the dataset to load.</p></li>
-<li><p><strong>version</strong> (<em>str</em>) – Version of the dataset to load.</p></li>
-<li><p><strong>subdataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the subdataset to load (if applicable).</p></li>
-<li><p><strong>ignore_dirs</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of directory name substrings to ignore when loading files.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the dataset to load.</p></li>
+<li><p><strong>version</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Version of the dataset to load. If not provided, the latest version is used.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>subdataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – Name of the subdataset to load (if applicable). Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments to pass to the loader function. Common options include:</p>
+<ul>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional</span></dt><dd><p>Resolution to load (if supported by the dataset).</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">static</span></code><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, optional</span></dt><dd><p>Whether to load static files (if supported by the dataset).</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Loaded dataset in appropriate format.</p>
+<dd class="field-even"><p>Loaded dataset in the appropriate format determined by the loader function.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame, gpd.GeoDataFrame, or xr.Dataset</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>KeyError</strong> – If no matching dataset entry is found.</p></li>
-<li><p><strong>ValueError</strong> – If multiple entries match the criteria.</p></li>
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">subdataset</span></code> is specified for a dataset that does not define subdatasets.</p></li>
+<li><p><strong>ValueError</strong> – If multiple entries match the criteria or if multiple subdatasets exist
+    and none is specified.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Load the latest version of a dataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load a specific version:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load a specific subdataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">,</span> <span class="n">subdataset</span><span class="o">=</span><span class="s1">&#39;sub1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="datapool.catalog.DataCatalog.search">
 <span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.search" title="Link to this definition"></a></dt>
-<dd><p>Search datasets by keyword in dataset name, display name, or tags.
-Accepts either a single string or a list of keywords.</p>
+<dd><p>Search datasets by keyword in dataset name, display name, or tags.</p>
+<p>Accepts either a single string or a list of keywords and returns a DataFrame
+of datasets matching any of the provided keywords.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>keyword</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – Keyword(s) to search for.</p>
+<dd class="field-odd"><p><strong>keyword</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Keyword(s) to search for in dataset name, display name, or tags.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>DataFrame of datasets matching any of the keywords.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Search for a single keyword:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Search for multiple keywords:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">([</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;precipitation&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

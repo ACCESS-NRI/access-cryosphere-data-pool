@@ -100,10 +100,10 @@
 <td><p>Default loader function to load data based on file extension.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#datapool.loaders.measures_velocity" title="datapool.loaders.measures_velocity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measures_velocity</span></code></a>(self, row[, resolution, ...])</p></td>
-<td><p></p></td>
+<td><p>Custom loader for MEaSUREs Velocity datasets.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#datapool.loaders.racmo" title="datapool.loaders.racmo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">racmo</span></code></a>(self, row, **kwargs)</p></td>
-<td><p></p></td>
+<td><p>Custom loader for RACMO datasets.</p></td>
 </tr>
 </tbody>
 </table>
@@ -111,6 +111,8 @@
 <dt class="sig sig-object py" id="datapool.loaders.default">
 <span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.default" title="Link to this definition"></a></dt>
 <dd><p>Default loader function to load data based on file extension.</p>
+<p>Load data from various file formats (CSV, GeoPackage, Shapefile, GeoTIFF, NetCDF)
+and return the appropriate data structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -126,11 +128,14 @@ Default is True. The default loader only supports static files.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The loaded data in the appropriate format based on file extension:
-- ‘csv’: pandas.DataFrame
-- ‘gpkg’ or ‘shp’: geopandas.GeoDataFrame
-- ‘tif’: xarray.Dataset
-- ‘nc’: xarray.Dataset</p>
+<dd class="field-even"><p><p>The loaded data in the appropriate format based on file extension:</p>
+<ul class="simple">
+<li><p>’csv’: <code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p></li>
+<li><p>’gpkg’ or ‘shp’: <code class="xref py py-class docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code></p></li>
+<li><p>’tif’: <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></p></li>
+<li><p>’nc’: <code class="xref py py-class docutils literal notranslate"><span class="pre">xarray.Dataset</span></code></p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame or gpd.GeoDataFrame or xr.Dataset</p>
@@ -138,7 +143,7 @@ Default is True. The default loader only supports static files.</p></li>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>FileNotFoundError</strong> – If no files matching the criteria are found.</p></li>
-<li><p><strong>ValueError</strong> – If the file extension is not supported.</p></li>
+<li><p><strong>ValueError</strong> – If the file extension is not supported or if static flag is not True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -147,12 +152,88 @@ Default is True. The default loader only supports static files.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="datapool.loaders.measures_velocity">
 <span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">measures_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">static</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.measures_velocity" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Custom loader for MEaSUREs Velocity datasets.</p>
+<p>Loads MEaSUREs ice velocity NetCDF files, optionally filtering by resolution and static/annual mode,
+and adds a time dimension to annual files based on the year(s) encoded in the filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<em>object</em>) – The class instance.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – Dictionary containing dataset metadata, including file path, extension, and loading parameters.</p></li>
+<li><p><strong>resolution</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, optional) – The resolution to filter files by. Required if the dataset defines multiple resolutions.</p></li>
+<li><p><strong>static</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, optional) – Flag indicating whether to load static files (True) or annual files (False).</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <code class="docutils literal notranslate"><span class="pre">xr.open_mfdataset</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded MEaSUREs velocity data as an xarray Dataset. For annual files, a time dimension is added
+based on the year(s) in the filename (set to July 2nd of the middle year).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xr.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If no files matching the criteria are found.</p></li>
+<li><p><strong>ValueError</strong> – If required parameters are missing or filtering criteria are not met.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>For annual files, the time dimension is set to July 2nd of the middle year (or the single year if only one is present).</p></li>
+<li><p>Assumes the filename is stored in <code class="docutils literal notranslate"><span class="pre">ds.encoding['source']</span></code>.</p></li>
+<li><p>Uses parallel loading via <code class="docutils literal notranslate"><span class="pre">xr.open_mfdataset</span></code>.</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">loaders</span><span class="o">.</span><span class="n">measures_velocity</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;1km&#39;</span><span class="p">,</span> <span class="n">static</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="datapool.loaders.racmo">
 <span class="sig-prename descclassname"><span class="pre">datapool.loaders.</span></span><span class="sig-name descname"><span class="pre">racmo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.loaders.racmo" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Custom loader for RACMO datasets.</p>
+<p>Loads RACMO NetCDF files, preprocesses them by dropping unnecessary variables
+and setting coordinates, then combines them into a single xarray Dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<em>object</em>) – The class instance.</p></li>
+<li><p><strong>row</strong> (<em>dict</em>) – Dictionary containing dataset metadata, including file path, extension,
+and loading parameters.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <code class="docutils literal notranslate"><span class="pre">xr.open_mfdataset</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded RACMO data as an xarray Dataset with preprocessed variables
+and coordinates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xr.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If no files matching the criteria are found.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<dl class="simple">
+<dt>UserWarning</dt><dd><p>For the ‘racmo2.3p2_monthly_27km_1979-2022’ dataset, a warning is issued
+noting that timesteps vary between variables/files, which may introduce
+all-NaN arrays for timesteps where a variable lacks data.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Drops variables ‘block1’ and ‘block2’ if present.</p></li>
+<li><p>Sets ‘rlat’ and ‘rlon’ as coordinates.</p></li>
+<li><p>Uses parallel loading via <code class="docutils literal notranslate"><span class="pre">xr.open_mfdataset</span></code>.</p></li>
+<li><p>Default merge behavior: combine by coordinates, outer join, override compatibility.</p></li>
+</ul>
+</dd></dl>
 
 </section>
 
