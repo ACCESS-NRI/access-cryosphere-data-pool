@@ -19,6 +19,10 @@ Getting Started
 
 To get started with access-cryosphere-data-pool, please refer to the `installation <installation>`_ guide and the `overview <overview>`_ section for a comprehensive introduction to the library's features and capabilities.
 
+Tutorials
+-------------------
+For hands-on tutorials, please refere to the `tutorials <tutorials>`_ section.
+
 Contributing
 -------------------
 We welcome contributions from the community! If you're interested in contributing to access-cryosphere-data-pool development or documentation, please check out our `contributing guidelines <contributing>`_.
