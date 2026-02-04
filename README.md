@@ -2,6 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/access-cryosphere-data-pool)](https://pypi.org/project/access-cryosphere-data-pool/)
 [![Conda](https://img.shields.io/conda/v/accessnri/access-cryosphere-data-pool)](https://anaconda.org/accessnri/access-cryosphere-data-pool)
+[![Docs](https://img.shields.io/badge/docs-online-brightgreen?style=flat-square)](https://access-nri.github.io/access-cryosphere-data-pool/index.html)
 
 
 ---
