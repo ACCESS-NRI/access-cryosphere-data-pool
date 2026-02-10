@@ -1,15 +1,15 @@
 .. _api:
 
-access-cryosphere-data-pool API Reference
+ACCESS Cryosphere Community Datapool API Reference
 =========================================
-.. automodule:: access-cryosphere-data-pool
-.. currentmodule:: access-cryosphere-data-pool
+.. automodule:: datapool
+.. currentmodule:: datapool
 
 .. _data-catalog:
 
 DataCatalog
 -----------
-``access-cryosphere-data-pool`` is developed around a cenral ``DataCatalog()`` class.
+The ACCESS Cryosphere Community Datapool is developed around a cenral ``DataCatalog`` class.
 
 .. autosummary::
     :toctree: api
@@ -24,7 +24,7 @@ There are various methods to explore the DataCatalog:
 
 .. autosummary::
    :toctree: api
-   :recursive:
+   :no-index:
 
     datapool.catalog.DataCatalog.available_resolutions
     datapool.catalog.DataCatalog.available_subdatasets
@@ -36,11 +36,11 @@ There are various methods to explore the DataCatalog:
 
 Loading data
 ------------
-Datasets are loaded using the ``load_dataset()`` method.
+Datasets are loaded using the ``load_dataset`` method.
 
 .. autosummary::
    :toctree: api
-   :recursive:
+   :no-index:
 
    datapool.catalog.DataCatalog.load_dataset
 
