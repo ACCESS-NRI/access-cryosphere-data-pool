@@ -1,14 +1,14 @@
 .. _api:
 
 access-cryosphere-data-pool API Reference
-===================
+=========================================
 .. automodule:: access-cryosphere-data-pool
 .. currentmodule:: access-cryosphere-data-pool
 
 .. _data-catalog:
 
 DataCatalog
--------------------
+-----------
 ``access-cryosphere-data-pool`` is developed around a cenral ``DataCatalog()`` class.
 
 .. autosummary::
@@ -19,7 +19,7 @@ DataCatalog
 .. _data-discovery:
 
 Data discovery
--------------------
+--------------
 There are various methods to explore the DataCatalog:
 
 .. autosummary::
@@ -35,7 +35,7 @@ There are various methods to explore the DataCatalog:
 .. _loading_data:
 
 Loading data
--------------------
+------------
 Datasets are loaded using the ``load_dataset()`` method.
 
 .. autosummary::

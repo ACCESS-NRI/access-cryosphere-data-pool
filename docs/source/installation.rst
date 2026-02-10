@@ -7,7 +7,7 @@ Installation
 access-cryosphere-data-pool can be installed using `pip` or `conda`, or by cloning the repository from GitHub. Below are instructions for each method.
 
 Installing via pip
------------------
+------------------
 You can install access-cryosphere-data-pool using `pip`, the Python package manager.
 See the official release on PyPI: https://pypi.org/project/access-cryosphere-data-pool/
 
@@ -18,7 +18,7 @@ Run the following command in your terminal:
    pip install access-cryosphere-data-pool
 
 Installing via conda
--------------------
+--------------------
 If you prefer using `conda`, you can install access-cryosphere-data-pool from the `accessnri` channel.  
 https://anaconda.org/channels/accessnri/packages/access-cryosphere-data-pool/overview
 
@@ -27,7 +27,7 @@ https://anaconda.org/channels/accessnri/packages/access-cryosphere-data-pool/ove
    conda install accessnri::access-cryosphere-data-pool
 
 Installing from GitHub (Development Version)
--------------------------------------------
+--------------------------------------------
 You can also install the latest development version directly from the GitHub repository:
 
 1. Clone the repository:
