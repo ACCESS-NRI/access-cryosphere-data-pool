@@ -114,7 +114,7 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dd><p>Parsed YAML configuration content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -136,7 +136,7 @@ list, search, and load datasets with support for multiple versions and subdatase
 <dd><p>Subset or summary of the datasets DataFrame, used for display purposes
 (e.g., in <cite>_repr_html_</cite>). This may reflect filtered search results
 or the full catalog if no filtering has been applied. By default, it returns
-self.datasets.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">self.datasets</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
@@ -145,14 +145,14 @@ self.datasets.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">DataCatalog</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v1&#39;</span><span class="p">)</span>
+<p>Initialise and view a catalog
+&gt;&gt;&gt; catalog = DataCatalog()
+&gt;&gt;&gt; catalog</p>
+<p>Perform a search and view the filtered catalog</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_catalog</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_catalog</span>
 </pre></div>
 </div>
-<p># Perform a search and view summary
-&gt;&gt;&gt; filtered_catalog = catalog.search(‘temperature’)
-&gt;&gt;&gt; filtered_catalog</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="datapool.catalog.DataCatalog.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#datapool.catalog.DataCatalog.__init__" title="Link to this definition"></a></dt>
