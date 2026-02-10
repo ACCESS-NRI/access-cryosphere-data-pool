@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-  # Trigger on PRs for testing
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 # Define jobs
@@ -53,7 +49,7 @@ jobs:
 
         # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e #v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/html
