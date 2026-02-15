@@ -15,4 +15,4 @@ The following Jupyter notebooks provide a high-level introduction to the ACCESS 
      - Actions
    * - ACCESS CCD Introduction
      - :doc:`View <tutorials/1_CCD_Overview>` | 
-       :download:`Download <tutorials/1_1_CCD_Overview.ipynb>`
+       :download:`Download <tutorials/1_CCD_Overview.ipynb>`
