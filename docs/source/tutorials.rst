@@ -3,11 +3,16 @@
 Tutorials
 =========
 
-Hands-on tutorials demonstrating the use of access-cryosphere-data-pool.
+ACCESS Cryosphere Community Datapool introduction
+--------------------------------------------------
 
-.. toctree::
-   :maxdepth: 1
+The following Jupyter notebooks provide a high-level introduction to the ACCESS Cryosphere Community Datapool.
 
-   tutorials/1_CCD_Overview.ipynb
+.. list-table::
+   :header-rows: 1
 
-Notebooks can be downloaded using the "Download Notebook" button at the bottom of each notebook.
+   * - Notebook
+     - Actions
+   * - ACCESS CCD Introduction
+     - :doc:`View <tutorials/1_CCD_Overview>` | 
+       :download:`Download <tutorials/1_1_CCD_Overview.ipynb>`
